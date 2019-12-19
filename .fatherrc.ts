@@ -11,8 +11,7 @@ const options: IBundleOptions = {
     // @ts-ignore
     doc: {
         // themeConfig: { mode: 'dark' },
-        dest: '/docs',
-        base: '/docs',
+        base: '/beast-lib',
         // @ts-ignore
         version: '1.2.0'
     },
