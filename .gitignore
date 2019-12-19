@@ -1,6 +1,6 @@
 .storybook
 # docz
-.doc*
+.docz
 
 # storybook
 .storybook*
