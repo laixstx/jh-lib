@@ -1,8 +1,8 @@
 {
-  "vendors.css": "/docs/static/css/vendors.ecffe564ee0ebc6361ca.css",
-  "vendors.js": "/docs/static/js/vendors.10a1b8d1.js",
-  "app.js": "/docs/static/js/app.ecffe564ee0ebc6361ca.js",
-  "src-components-button-index.css": "/docs/static/css/src-components-button-index.ecffe564ee0ebc6361ca.css",
-  "src-components-button-index.js": "/docs/static/js/src-components-button-index.7e4e8925.js",
-  "index.html": "/docs/index.html"
+  "vendors.css": "/beast-lib/static/css/vendors.8f1a4ee39cc91c8542ed.css",
+  "vendors.js": "/beast-lib/static/js/vendors.54e2e018.js",
+  "app.js": "/beast-lib/static/js/app.8f1a4ee39cc91c8542ed.js",
+  "src-components-button-index.css": "/beast-lib/static/css/src-components-button-index.8f1a4ee39cc91c8542ed.css",
+  "src-components-button-index.js": "/beast-lib/static/js/src-components-button-index.7e4e8925.js",
+  "index.html": "/beast-lib/index.html"
 }
