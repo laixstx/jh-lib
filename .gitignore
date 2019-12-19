@@ -1,3 +1,13 @@
+.storybook
+# docz
+.doc*
+
+# storybook
+.storybook*
+
+# idea
+*.idea
+
 # Logs
 logs
 *.log
