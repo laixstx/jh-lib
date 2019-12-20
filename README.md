@@ -1,4 +1,4 @@
-# beastLib
+# beast-lib
 这一个 React 组件库。
 
 * 组件库包含 [antd](https://ant.design/index-cn) 的所有组件
