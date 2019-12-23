@@ -2,7 +2,7 @@ import {IBundleOptions} from 'father'
 
 // @ts-ignore
 const options: IBundleOptions = {
-    // entry: 'src/index.tsx',
+    entry: 'index.tsx',
     file: 'beast',
     esm: {
         type: 'rollup'
@@ -11,9 +11,7 @@ const options: IBundleOptions = {
     // @ts-ignore
     doc: {
         // themeConfig: { mode: 'dark' },
-        base: '/beast-lib',
-        // @ts-ignore
-        version: '1.2.0'
+        base: '/beast-lib'
     },
     // 是否把 helper 方法提取到 @babel/runtime 里。只对 esm 有效。官网：https://babeljs.io/docs/en/babel-runtime
     runtimeHelpers: true,

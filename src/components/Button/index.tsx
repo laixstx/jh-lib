@@ -1,17 +1,23 @@
 import React from 'react';
 import {Button} from 'antd';
-import {ButtonProps} from 'antd/es/button/index';
-import classNames from 'classnames';
-import styles from './index.module.less';
+import {ButtonProps} from 'antd/es/button'
 
-export interface BaseButtonProps extends ButtonProps {
+/**
+ * 个性化的属性
+ */
+export interface BtButtonProps {
+
 }
 
-export default class BtButton extends React.Component<BaseButtonProps> {
+export default class BtButton extends React.Component<BtButtonProps & ButtonProps> {
 
     render(): React.ReactNode {
-        let className = classNames(this.props.className, styles.primary);
+        return <Button {...this.props}/>;
+    }
+}
 
-        return <Button {...{...this.props, className}}/>;
+export class BtButton_ extends React.Component<BtButtonProps> {
+    render(): React.ReactNode {
+        return null;
     }
 }

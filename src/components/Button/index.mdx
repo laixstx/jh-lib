@@ -3,21 +3,52 @@ name: Button
 route: /button
 menu: Components
 ---
-
+import '../../docz.less'
 import { Playground, Props } from 'docz'
-import Button from './index'
+import Button, {BtButton_} from './index'
 
 # Button
 
-按钮
+按钮组件。
+基于 antd 的 Button 组件封装。
 
-## 基础使用
+## 代码演示
+
+这个只是演示部分个性化示例，更多演示见 [这里](https://ant.design/components/button-cn/)
+
+### 按钮类型
 
 <Playground>
-  <Button style={{marginRight: 5}}>default</Button>
-  <Button type={"primary"}>primary</Button>
+    <Button type="primary">Primary</Button>
+    <Button>Default</Button>
+    <Button type="dashed">Dashed</Button>
+    <Button type="danger">Danger</Button>
+    <Button type="link">Link</Button>
+</Playground>
+
+### 图标按钮
+
+<Playground>
+    <Button type="primary" shape="circle" icon="search" />
+    <Button type="primary" shape="circle">
+      A
+    </Button>
+    <Button type="primary" icon="search">
+      Search
+    </Button>
+    <Button shape="circle" icon="search" />
+    <Button icon="search">Search</Button>
+    <br />
+    <Button shape="circle" icon="search" />
+    <Button icon="search">Search</Button>
+    <Button type="dashed" shape="circle" icon="search" />
+    <Button type="dashed" icon="search">
+      Search
+    </Button>
 </Playground>
 
 ## API
 
-<Props type="table" of={Button} />
+> 支持 antd [Button](https://ant.design/components/button-cn/#API) 的其他所有属性
+
+<Props of={BtButton_} />
