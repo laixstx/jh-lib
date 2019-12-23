@@ -2,10 +2,17 @@
   "name": "beast-lib",
   "version": "0.1.0",
   "description": "A React-based component library",
-  "main": "index.js",
   "repository": "https://github.com/laixstx/beast-lib.git",
   "author": "twobear",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "dist/*"
+  ],
+  "main": "dist/beast.js",
+  "module": "dist/beast.esm.js",
   "scripts": {
     "build": "father build",
     "doc:dev": "father doc dev",
