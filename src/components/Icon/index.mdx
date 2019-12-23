@@ -1,0 +1,43 @@
+---
+name: Icon 图标
+route: /icon
+menu: Components
+---
+import '../../docz.less'
+import { Playground, Props } from 'docz'
+import BtIcon, {BtIcon_} from './index'
+
+# Icon
+
+按钮组件。
+基于 antd 的 Icon 组件封装。
+
+## 代码演示
+
+这个只是演示部分个性化示例，更多演示见 [这里](https://ant.design/components/icon-cn/)
+
+### 图标类型
+
+<Playground>
+   <BtIcon type="home" />
+   <BtIcon type="setting" theme="filled" />
+   <BtIcon type="smile" theme="outlined" />
+   <BtIcon type="sync" spin />
+   <BtIcon type="smile" rotate={180} />
+   <BtIcon type="loading" />
+</Playground>
+
+### 多色图标
+
+<Playground>
+ <BtIcon type="smile" theme="twoTone" />
+ <BtIcon type="heart" theme="twoTone" twoToneColor="#eb2f96" />
+ <BtIcon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+</Playground>
+
+##
+## API
+
+> 支持 antd [Icon](https://ant.design/components/icon-cn/#API) 的其他所有属性
+
+<Props of={BtIcon_} />
