@@ -8,14 +8,17 @@ import {TypographyProps} from 'antd/es/Typography'
 export interface BtTypographyProps {
     // isIconFont?:false,
 }
+
 export default class BtTypography extends React.Component<BtTypographyProps & TypographyProps> {
 
+    static Text = Typography.Text;
+    static Title = Typography.Title;
+    static Paragraph = Typography.Paragraph;
+
     render(): React.ReactNode {
-        return  <Typography {...this.props}/>;
+        return <Typography {...this.props}/>;
     }
 }
-
-
 
 export class BtTypography_ extends React.Component<BtTypographyProps> {
     render(): React.ReactNode {
