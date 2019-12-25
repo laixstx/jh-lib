@@ -9,7 +9,8 @@
     "dist"
   ],
   "sideEffects": [
-    "dist/*"
+    "dist/*",
+    "src/*"
   ],
   "main": "dist/beast.js",
   "module": "dist/beast.esm.js",
