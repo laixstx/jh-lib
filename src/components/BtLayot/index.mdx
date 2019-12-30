@@ -1,0 +1,45 @@
+---
+name: Layout 布局
+route: /layout
+menu: Components
+---
+import '../../docz.less'
+import { Playground, Props } from 'docz'
+import BtLayout, {BtLayout_} from './index'
+
+# Layout
+
+布局组件
+基于 antd 的 layout 组件封装。
+
+## 代码演示
+
+这个只是演示部分个性化示例，更多演示见 [这里](https://ant.design/components/layout-cn/)
+
+### 基本结构
+
+<Playground>
+    <BtLayout>
+      <BtLayout.Header>Header</BtLayout.Header>
+      <BtLayout.Content>Content</BtLayout.Content>
+      <BtLayout.Footer>Footer</BtLayout.Footer>
+    </BtLayout>
+</Playground>
+
+<Playground>
+    <BtLayout>
+      <BtLayout.Sider>Sider</BtLayout.Sider>
+      <BtLayout>
+        <BtLayout.Header>Header</BtLayout.Header>
+           <BtLayout.Content>Content</BtLayout.Content>
+           <BtLayout.Footer>Footer</BtLayout.Footer>
+      </BtLayout>
+    </BtLayout>
+</Playground>
+
+
+## API
+
+> 支持 antd [Layout](https://ant.design/components/layout-cn/#API) 的其他所有属性
+
+<Props of={BtLayout_} />

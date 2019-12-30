@@ -10,6 +10,9 @@ export interface BtIconProps {
 }
 
 export default class BtIcon extends React.Component<BtIconProps & IconProps> {
+    static createFromIconfontCN = Icon.createFromIconfontCN;
+    static getTwoToneColor = Icon.getTwoToneColor;
+    static setTwoToneColor = Icon.setTwoToneColor;
 
     render(): React.ReactNode {
         return  <Icon {...this.props}/>;

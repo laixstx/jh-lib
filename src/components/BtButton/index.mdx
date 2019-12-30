@@ -5,7 +5,7 @@ menu: Components
 ---
 import '../../docz.less'
 import { Playground, Props } from 'docz'
-import Button, {BtButton_} from './index'
+import BtButton, {BtButton_} from './index'
 
 # Button
 
@@ -19,32 +19,34 @@ import Button, {BtButton_} from './index'
 ### 按钮类型
 
 <Playground>
-    <Button type="primary">Primary</Button>
-    <Button>Default</Button>
-    <Button type="dashed">Dashed</Button>
-    <Button type="danger">Danger</Button>
-    <Button type="link">Link</Button>
+    <BtButton.Group>
+        <BtButton type="primary">Primary</BtButton>
+        <BtButton>Default</BtButton>
+        <BtButton type="dashed">Dashed</BtButton>
+        <BtButton type="danger">Danger</BtButton>
+        <BtButton type="link">Link</BtButton>
+    </BtButton.Group>
 </Playground>
 
 ### 图标按钮
 
 <Playground>
-    <Button type="primary" shape="circle" icon="search" />
-    <Button type="primary" shape="circle">
+    <BtButton type="primary" shape="circle" icon="search" />
+    <BtButton type="primary" shape="circle">
       A
-    </Button>
-    <Button type="primary" icon="search">
+    </BtButton>
+    <BtButton type="primary" icon="search">
       Search
-    </Button>
-    <Button shape="circle" icon="search" />
-    <Button icon="search">Search</Button>
+    </BtButton>
+    <BtButton shape="circle" icon="search" />
+    <BtButton icon="search">Search</BtButton>
     <br />
-    <Button shape="circle" icon="search" />
-    <Button icon="search">Search</Button>
-    <Button type="dashed" shape="circle" icon="search" />
-    <Button type="dashed" icon="search">
+    <BtButton shape="circle" icon="search" />
+    <BtButton icon="search">Search</BtButton>
+    <BtButton type="dashed" shape="circle" icon="search" />
+    <BtButton type="dashed" icon="search">
       Search
-    </Button>
+    </BtButton>
 </Playground>
 
 ## API
