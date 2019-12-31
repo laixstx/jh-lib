@@ -1,5 +1,5 @@
 ---
-name: Button 按钮
+name: BtButton 按钮
 route: /button
 menu: Components
 ---
@@ -7,7 +7,7 @@ import '../../docz.less'
 import { Playground, Props } from 'docz'
 import BtButton, {BtButton_} from './index'
 
-# Button
+# BtButton
 
 按钮组件。
 基于 antd 的 Button 组件封装。
@@ -19,13 +19,11 @@ import BtButton, {BtButton_} from './index'
 ### 按钮类型
 
 <Playground>
-    <BtButton.Group>
-        <BtButton type="primary">Primary</BtButton>
-        <BtButton>Default</BtButton>
-        <BtButton type="dashed">Dashed</BtButton>
-        <BtButton type="danger">Danger</BtButton>
-        <BtButton type="link">Link</BtButton>
-    </BtButton.Group>
+    <BtButton type="primary">Primary</BtButton>
+    <BtButton>Default</BtButton>
+    <BtButton type="dashed">Dashed</BtButton>
+    <BtButton type="danger">Danger</BtButton>
+    <BtButton type="link">Link</BtButton>
 </Playground>
 
 ### 图标按钮
@@ -51,6 +49,6 @@ import BtButton, {BtButton_} from './index'
 
 ## API
 
-> 支持 antd [Button](https://ant.design/components/button-cn/#API) 的其他所有属性
+> 支持 antd [BtButton](https://ant.design/components/button-cn/#API) 的其他所有属性
 
 <Props of={BtButton_} />

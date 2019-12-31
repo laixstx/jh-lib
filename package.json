@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A React-based component library",
   "repository": "https://github.com/laixstx/beast-lib.git",
+  "keywords": ["react", "component", "beast-lib"],
   "author": "twobear",
   "license": "MIT",
   "files": [
@@ -19,6 +20,7 @@
     "doc:dev": "father doc dev",
     "doc:build": "father doc build",
     "doc:deploy": "father doc deploy",
+    "doc:sh": "sh ./scripts/doc_deploy.sh",
     "npm:pub": "npm publish",
     "npm:reg": "npm config set registry https://registry.npmjs.org/",
     "npm:tb": "npm config set registry http://registry.npm.taobao.org/"
