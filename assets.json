@@ -1,11 +1,11 @@
 {
-  "vendors.css": "/beast-lib/static/css/vendors.4873b28551eec5ad96b6.css",
+  "vendors.css": "/beast-lib/static/css/vendors.738c6fe14b67483f6c6b.css",
   "vendors.js": "/beast-lib/static/js/vendors.94e314c8.js",
-  "app.js": "/beast-lib/static/js/app.4873b28551eec5ad96b6.js",
+  "app.js": "/beast-lib/static/js/app.738c6fe14b67483f6c6b.js",
   "index.js": "/beast-lib/static/js/index.af4215b8.js",
-  "src-components-bt-button-index.css": "/beast-lib/static/css/src-components-bt-button-index.4873b28551eec5ad96b6.css",
-  "src-components-bt-button-index.js": "/beast-lib/static/js/src-components-bt-button-index.0b90d0f1.js",
-  "src-components-result-index.css": "/beast-lib/static/css/src-components-result-index.4873b28551eec5ad96b6.css",
-  "src-components-result-index.js": "/beast-lib/static/js/src-components-result-index.9131328c.js",
+  "src-components-bt-button-index.css": "/beast-lib/static/css/src-components-bt-button-index.738c6fe14b67483f6c6b.css",
+  "src-components-bt-button-index.js": "/beast-lib/static/js/src-components-bt-button-index.11ba2d84.js",
+  "src-components-result-index.css": "/beast-lib/static/css/src-components-result-index.738c6fe14b67483f6c6b.css",
+  "src-components-result-index.js": "/beast-lib/static/js/src-components-result-index.0779af9c.js",
   "index.html": "/beast-lib/index.html"
 }
