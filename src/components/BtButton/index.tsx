@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from 'antd';
 import {ButtonProps} from 'antd/es/button'
+import styles from './index.module.less'
 
 /**
  * 个性化的属性
@@ -17,7 +18,7 @@ export default class BtButton extends React.Component<BtButtonProps & ButtonProp
     static Group = Button.Group;
 
     render(): React.ReactNode {
-        return <Button {...this.props}/>;
+        return <Button className={styles.primary} {...this.props}/>;
     }
 }
 

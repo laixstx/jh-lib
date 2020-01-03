@@ -1,1 +1,0 @@
-export {default as BtButton} from './src/components/BtButton';

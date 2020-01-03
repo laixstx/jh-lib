@@ -2,12 +2,13 @@ import {IBundleOptions} from 'father'
 
 // @ts-ignore
 const options: IBundleOptions = {
-    entry: 'index.tsx',
-    file: 'beast',
-    esm: {
-        type: 'rollup'
-    },
-    cjs: 'rollup',
+    // entry: 'index.tsx',
+    // file: 'beast',
+    // esm: {
+    //     type: 'rollup',
+    //     importLibToEs: true,
+    // },
+    // cjs: 'rollup',
     // @ts-ignore
     doc: {
         // themeConfig: { mode: 'dark' },
