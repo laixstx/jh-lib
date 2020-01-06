@@ -20,8 +20,8 @@
   "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
-    "build": "father build",
-    "es_build": "sh ./scripts/es_build.sh",
+    "f:build": "father build",
+    "build": "sh ./scripts/es_build.sh",
     "doc:dev": "father doc dev",
     "doc:build": "father doc build",
     "doc:deploy": "father doc deploy",
