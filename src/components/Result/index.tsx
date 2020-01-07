@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import {Icon} from 'antd';
 import styles from './index.module.less';
-import {sort} from 'beast-utils'
 
 export interface IResultProps {
     /**
@@ -47,7 +46,6 @@ export default class Result extends React.Component<IResultProps, any> {
             children,
             ...restProps
         } = this.props;
-        console.log(`sort`)
         const iconMap = {
             error: <Icon className={styles.error} type="close-circle" theme="filled"/>,
             success: <Icon className={styles.success} type="check-circle" theme="filled"/>,

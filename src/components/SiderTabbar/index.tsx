@@ -1,30 +1,34 @@
-import React, { Component } from 'react';
-import { Collapse, Icon, Popover, Tabs, Tag } from 'antd';
+import React, {Component} from 'react';
+import {Collapse, Icon, Popover, Tabs, Tag} from 'antd';
 import styles from './index.module.less';
-import  {isObjectValEqual}  from 'beast-utils';
-import {sort } from  'beast-utils'
+import {isObjectValEqual, sort} from 'beast-utils';
 import {find} from 'lodash-es';
-const { Panel } = Collapse;
-const { TabPane } = Tabs;
+
+const {Panel} = Collapse;
+const {TabPane} = Tabs;
+
 interface ISiderTabbar {
-    compData:Array<{
+    compData: Array<any>;
 
-    }>
+    [propName: string]: any;
 }
-export default class SiderTabbar extends Component {
 
-    constructor(props:object) {
+export default class SiderTabbar extends Component<ISiderTabbar> {
+    static defaultProps: any;
+
+    constructor(props: ISiderTabbar) {
         super(props);
         this.state = this._getStateByProps(props);
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps: Readonly<ISiderTabbar>, prevState: Readonly<{}>, snapshot?: any): void {
+
         if (!isObjectValEqual(prevProps, this.props)) {
             this.setState(this._getStateByProps(this.props));
         }
     }
 
-    _getStateByProps(props) {
+    _getStateByProps(props: ISiderTabbar) {
         return {
             activeObj: props.defaultActiveObj,
             activeKey: props.defaultActiveObj ? props.defaultActiveObj.code : '',
@@ -53,7 +57,7 @@ export default class SiderTabbar extends Component {
         if (this.state.activeObj && this.state.activeObj.dataList) {
             activeSubObj = find(this.state.activeObj.dataList, (item) => (item && item.code === activeSubKey));
         }
-        this.setState({ activeSubKey, activeSubObj }, () => {
+        this.setState({activeSubKey, activeSubObj}, () => {
             // console.log('ss');
             this.props.onChange && this.props.onChange(this.state);
         });
@@ -62,7 +66,7 @@ export default class SiderTabbar extends Component {
     render() {
         const compData = this.props.compData || [];
 
-        const iconStyle = { color: '#1890FF', fontSize: 14 };
+        const iconStyle = {color: '#1890FF', fontSize: 14};
         let tabH = document.body.offsetHeight - 164 - compData.length * 47;
         if (tabH < 47 * 4) {
             tabH = 47 * 4;
@@ -75,7 +79,7 @@ export default class SiderTabbar extends Component {
                     className={'sider-tab'}
                     accordion
                     bordered={false}
-                    expandIcon={({ isActive }) => (isActive ? <Icon style={iconStyle} type="minus-square"/> :
+                    expandIcon={({isActive}) => (isActive ? <Icon style={iconStyle} type="minus-square"/> :
                         <Icon style={iconStyle} type="plus-square"/>)}>
                     {
                         compData.map((item) => (
@@ -100,14 +104,15 @@ export default class SiderTabbar extends Component {
                                     onChange={this.changeSub.bind(this)}
                                     defaultActiveKey={`${item.dataList && item.dataList[0] ? item.dataList[0].code : ''}`}
                                     tabPosition={'left'}
-                                    style={{ height: tabH, width: '100%' }}>
+                                    style={{height: tabH, width: '100%'}}>
                                     {
                                         item.dataList && item.dataList.length > 0 && (
                                             item.dataList.map((subItem) => {
                                                 // let name = `${subItem.code} ${subItem.name}`;
                                                 // let needTip = name.length >= 12;
                                                 return <TabPane tab={
-                                                    <Popover content={`${subItem.code} ${subItem.name}`} placement={'topLeft'}>
+                                                    <Popover content={`${subItem.code} ${subItem.name}`}
+                                                             placement={'topLeft'}>
                                                         {subItem.name}
                                                     </Popover>
                                                 } key={`${subItem.code}`}/>;
