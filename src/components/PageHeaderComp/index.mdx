@@ -1,0 +1,36 @@
+---
+name: Result 处理结果
+route: /result
+menu: Components
+---
+import '../../docz.less'
+import { Playground, Props } from 'docz'
+import BtButton from '../BtButton/index'
+import Result from './index'
+
+# Result
+
+结果页，用于对用户进行的一系列任务处理结果进行反馈。
+
+## 代码演示
+
+### 基础使用
+
+<Playground>
+  <Result
+    type="success"
+    title="提交成功"
+    description="提交结果页用于反馈一系列操作任务的处理结果，如果仅是简单操作，使用 Message 全局提示反馈即可。本文字区域可以展示简单的补充说明，如果有类似展示“单据”的需求，下面这个灰色区域可以呈现比较复杂的内容。"
+    extra={<div>额外信息</div>}
+    actions={  <div>
+                 <BtButton type="primary">返回列表</BtButton>
+                 <BtButton>查看项目</BtButton>
+                 <BtButton>打 印</BtButton>
+               </div>}
+    style={{ width: '100%' }}
+  />
+</Playground>
+
+## API
+
+<Props of={Result} />
