@@ -8,13 +8,20 @@ const {Panel} = Collapse;
 const {TabPane} = Tabs;
 
 interface ISiderTabbar {
-    compData: Array<any>;
+    compData?: Array<any>;
 
     [propName: string]: any;
 }
 
+interface SubItem {
+    code?:string,
+    name?:string
+}
+
+
 export default class SiderTabbar extends Component<ISiderTabbar> {
     static defaultProps: any;
+    state: any;
 
     constructor(props: ISiderTabbar) {
         super(props);
@@ -37,22 +44,22 @@ export default class SiderTabbar extends Component<ISiderTabbar> {
         };
     }
 
-    changeColl(activeKey) {
-        const newState = {
-            activeKey,
-        };
+    changeColl(activeKey: any) {
+        let newState: ISiderTabbar = {activeKey};
+
+
         newState.activeObj = find(this.props.compData, (item) => (item && item.code === activeKey));
 
         if ('' === this.state.activeSubKey && newState.activeObj && newState.activeObj.dataList && newState.activeObj.dataList[0]) {
-            newState.activeSubObj = newState.activeObj.dataList[0];
+            newState.activeSubObj = newState.activeObj.dataList[0]
             newState.activeSubKey = newState.activeSubObj.code;
         }
         this.setState(newState, () => {
-            this.props.onChange && this.props.onChange(this.state);
+            this.props.onChange && this.props.onChange(this.state)
         });
     }
 
-    changeSub(activeSubKey) {
+    changeSub(activeSubKey: any) {
         let activeSubObj;
         if (this.state.activeObj && this.state.activeObj.dataList) {
             activeSubObj = find(this.state.activeObj.dataList, (item) => (item && item.code === activeSubKey));
@@ -107,7 +114,7 @@ export default class SiderTabbar extends Component<ISiderTabbar> {
                                     style={{height: tabH, width: '100%'}}>
                                     {
                                         item.dataList && item.dataList.length > 0 && (
-                                            item.dataList.map((subItem) => {
+                                            item.dataList.map((subItem:SubItem) => {
                                                 // let name = `${subItem.code} ${subItem.name}`;
                                                 // let needTip = name.length >= 12;
                                                 return <TabPane tab={
