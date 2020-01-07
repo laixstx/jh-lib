@@ -1,0 +1,37 @@
+---
+name: GlobalFooter 全局Footer
+route: /globalFooter
+menu: Components
+---
+import '../../docz.less'
+import { Playground, Props } from 'docz'
+import GlobalFooter from './index'
+
+
+# GlobalFooter
+
+全局Footer组件。
+
+
+## 代码演示
+
+
+### GlobalFooter
+
+<Playground>
+  < GlobalFooter copyright={'具体api请查看下面的API'}
+   links={[{title:<h1>to Baidu</h1>,href:'https://www.baidu.com'}]} />
+</Playground>
+
+## API
+IGlobalFooterProps {
+    links?: Array<{
+        key?: string;
+        title: React.ReactNode;
+        href: string;
+        blankTarget?: boolean;
+    }>;
+    copyright?: React.ReactNode;
+    style?: React.CSSProperties;
+}
+
