@@ -22,6 +22,7 @@
   "scripts": {
     "f:build": "father build",
     "build": "sh ./scripts/es_build.sh",
+    "node:dep": "node ./scripts/npm_deploy.js",
     "doc:dev": "father doc dev",
     "doc:build": "father doc build",
     "doc:deploy": "father doc deploy",
