@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import {Icon} from 'antd';
 import styles from './index.module.less';
+import {ConfigConsumer} from 'antd/es/config-provider'
+import {BtConsumerProps} from '../Config'
 
 export interface IResultProps {
     /**
@@ -34,8 +36,10 @@ export interface IResultProps {
     style?: React.CSSProperties;
 }
 
+
+
 export default class Result extends React.Component<IResultProps, any> {
-    render(): React.ReactNode {
+    res = ({localeUtils}: BtConsumerProps)=>{
         const {
             className,
             type,
@@ -61,6 +65,13 @@ export default class Result extends React.Component<IResultProps, any> {
                 {actions && <div className={styles.actions}>{actions}</div>}
                 {children}
             </div>
+        )
+    };
+    render(): React.ReactNode {
+        return (
+            <ConfigConsumer>
+                {this.res}
+            </ConfigConsumer>
         );
     }
 }

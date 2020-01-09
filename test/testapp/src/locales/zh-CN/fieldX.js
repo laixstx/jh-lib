@@ -1,0 +1,68 @@
+export default {
+  'fieldx.row':'行',
+  'fieldx.col':'列',
+  'fieldx.dht':'导航图',
+  'fieldx.content':'内容',
+  'fieldx.tpltype':'模板类型',
+  'fieldx.amount':'金额',
+  'fieldx.posted':'已过账',
+  'fieldx.unposted':'未过账',
+
+  // 头部
+  'fieldx.ti.description':'填报说明',
+  'fieldx.ti.ascList':'关联表',
+  'fieldx.ti.ascPck':'关联运行包',
+
+  // 维度
+  'fieldx.dim.cate':'节点',
+  'fieldx.dim.entity':'编制单位',
+  'fieldx.dim.entity_':'合并单元',
+  'fieldx.dim.period':'会计期间',
+  'fieldx.dim.period_':'期间',
+  'fieldx.dim.currency':'币种',
+  'fieldx.dim.tanscurrency':'交易币',
+  'fieldx.dim.rptcurrency':'报告币',
+  'fieldx.dim.lc':'本位币',
+  'fieldx.dim.item':'科目',
+  'fieldx.dim.item_':'合并科目',
+  'fieldx.dim.area':'区域',
+  'fieldx.dim.auditid':'审计线索',
+  'fieldx.dim.vendor':'供应商',
+  'fieldx.dim.biztype':'业态',
+  'fieldx.dim.biztype_':'业态(科目所属板块)',
+  'fieldx.dim.flow':'合并事务类型',
+  'fieldx.dim.plate':'版块',
+  'fieldx.dim.plate_':'板块',
+  'fieldx.dim.product':'产品大类',
+  'fieldx.dim.reserve':'备用',
+  'fieldx.dim.scope':'合并组',
+  'fieldx.dim.scope_':'合并组/平台',
+  'fieldx.dim.segment':'细分维',
+
+
+  // 校验表
+  'fieldx.cl.jygs':'校验公式',
+  'fieldx.cl.jygsen':'校验公式英文',
+  'fieldx.cl.jygsenck':'校验公式英文-参考',
+  'fieldx.cl.lNum':'左边数据',
+  'fieldx.cl.rNum':'右边数据',
+  'fieldx.cl.cRst':'校验结果',
+  'fieldx.cl.rstInfo':'结果说明',
+  'fieldx.cl.isForce':'是否强控',
+  'fieldx.cl.force':'强控',
+  'fieldx.cl.noForce':'非强控',
+  'fieldx.cl.noForce_':'不强控',
+  'fieldx.cl.pass':'通过',
+  'fieldx.cl.noPass':'不通过',
+  'fieldx.cl.explain':'备注',
+  // 补录调整
+  'fieldx.aj.ajNum':'调整数',
+  'fieldx.aj.afterNum':'调整后',
+  'fieldx.aj.ttBfNum':'账龄汇总(调整前)',
+  'fieldx.aj.ttAfNum':'账龄汇总(调整后)',
+  'fieldx.aj.ttAjNum':'校验区域(调整数为零)',
+
+  'fieldx.sj.ttAjNum':'调整金额（本年累计）',
+  'fieldx.output.scb':'输出表',
+
+};

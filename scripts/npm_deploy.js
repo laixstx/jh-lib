@@ -15,7 +15,7 @@ if (fs.existsSync(compDir)) {
     files.forEach((item) => {
         const stat = fs.statSync(path.join(compDir, item));
         // console.log(item, stat);
-        if (stat.isDirectory()) { // 是目录的话，说明是组件
+        if (stat.isDirectory() && item !== 'locale') { // 是目录的话，说明是组件
             writeStr += `export { default as ${item} } from './components/${item}';\n`;
         }
     });
