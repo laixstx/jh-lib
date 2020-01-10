@@ -1,4 +1,4 @@
-import zhCN from '../../../../src/components/locale/zh-CN'
+import zhCN from '../../../../src/locale/zh-CN'
 export default {
   ...zhCN
 }
