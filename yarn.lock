@@ -4640,7 +4640,7 @@ bcrypt-pbkdf@^1.0.0:
 
 beast-utils@^0.0.2-beta.6:
   version "0.0.2-beta.6"
-  resolved "https://registry.npm.taobao.org/beast-utils/download/beast-utils-0.0.2-beta.6.tgz?cache=0&sync_timestamp=1578378194902&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbeast-utils%2Fdownload%2Fbeast-utils-0.0.2-beta.6.tgz#57defdff1c81b7fda8858b00353b3894799a4190"
+  resolved "https://registry.npm.taobao.org/beast-utils/download/beast-utils-0.0.2-beta.6.tgz#57defdff1c81b7fda8858b00353b3894799a4190"
   integrity sha1-V979/xyBt/2ohYsANTs4lHmaQZA=
   dependencies:
     "@babel/runtime" "^7.7.7"
