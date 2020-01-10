@@ -1,4 +1,4 @@
-import enCN from '../../../../src/components/locale/en-US'
+import enCN from '../../../../src/locale/en-US'
 export default {
   ...enCN
 }
