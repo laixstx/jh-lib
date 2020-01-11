@@ -1,3 +1,4 @@
+console.log('en')
 export default {
-    'test':'Testing'
+    'test': 'Testing'
 }

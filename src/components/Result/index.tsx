@@ -71,6 +71,7 @@ export default class Result extends React.Component<IResultProps, any> {
         return (
             <ConfigConsumer>
                 {this.res}
+
             </ConfigConsumer>
         );
     }

@@ -3,6 +3,8 @@ import {BtConfigProvider} from "../../../../src";
 import * as localeUtils from '@/utils/localeUtils'
 import styles from './index.css';
 
+console.log(localeUtils)
+
 function BasicLayout(props) {
 
   return (

@@ -1,8 +1,10 @@
 import styles from './index.css';
 import React from 'react';
-import {BtButton,} from '../components';
+// import {BtButton} from '../components';
+import BtButton from '../../../../src/components/BtButton';
 import {Result} from '../../../../src'
 import {setLocale} from 'umi-plugin-locale';
+
 
 const ThemeContext = React.createContext('link');
 
@@ -14,7 +16,8 @@ class App extends React.Component {
   static contextType = ThemeContext;
 
   render() {
-    // console.log('dddaaa',this.context)
+    console.log('dddaaa', this.context)
+
     return (
       <div className={styles.normal}>
         <Result type='success' title='提交成功'/>
