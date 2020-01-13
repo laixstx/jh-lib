@@ -5,11 +5,11 @@ interface LocaleUtilsProps {
     myFormatMessage: Function
 }
 
-export interface BtConfigProviderProps {
+export interface GlobalProviderProps {
     localeUtils?: any
 }
 
-export type BtConsumerProps = ConfigConsumerProps & BtConfigProviderProps;
+export type JhConsumerProps = ConfigConsumerProps & GlobalProviderProps;
 
 /**
  * 组件的属性类型

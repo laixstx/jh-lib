@@ -1,7 +1,7 @@
 import styles from './index.css';
 import React from 'react';
 // import {BtButton} from '../components';
-import BtButton from '../../../../src/components/BtButton';
+import {} from '../../../../es/components/BtButton/config';
 import {Result} from '../../../../src'
 import {setLocale} from 'umi-plugin-locale';
 
