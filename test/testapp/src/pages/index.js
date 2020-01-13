@@ -1,26 +1,25 @@
 import styles from './index.css';
 import React from 'react';
-// import {BtButton} from '../components';
-import BtButton from '../../../../src/components/BtButton';
-import {Result} from '../../../../src'
-import {setLocale} from 'umi-plugin-locale';
-
+import {BtButton,} from '../components';
+import {BtConfigProvider,Result} from '../../../../src'
+import * as localeUtils from '@/utils/localeUtils'
+import { formatMessage, setLocale } from 'umi-plugin-locale';
 
 const ThemeContext = React.createContext('link');
 
-class App extends React.Component {
-  constructor(props) {
+class App extends React.Component{
+  constructor(props){
     super(props)
   }
-
   static contextType = ThemeContext;
 
   render() {
     console.log('dddaaa', this.context)
 
     return (
-      <div className={styles.normal}>
-        <Result type='success' title='提交成功'/>
+      <BtConfigProvider localeUtils={localeUtils}>
+        <div className={styles.normal}>
+          <Result type='success' title='提交成功'/>
 
         <BtButton onClick={() => {
           setLocale('en-US')
@@ -35,8 +34,7 @@ class App extends React.Component {
     )
   }
 }
-
-function Toolbar(props) {
+function Toolbar(props){
   return (
     <div>
       <App {...props}/>
@@ -44,34 +42,33 @@ function Toolbar(props) {
   )
 }
 
-export default class ThemedButton extends React.Component {
-  constructor(props) {
+export default class ThemedButton  extends React.Component {
+  constructor(props){
     super(props);
-    this.state = {
-      value: 1
+    this.state= {
+      value:1
     }
   }
-
-  add = () => {
+   add = ()=>{
 
     let {value} = this.state;
-    value += 1
+     value +=1
     this.setState({
-      value: value
+      value:value
     });
-  };
+   };
 
-  render() {
+  render(){
     let {value} = this.state;
     return (
       <ThemeContext.Provider value={
         {
-          type: "danger",
-          lock: true,
+          type:"danger",
+          lock:true,
           value
         }
       }>
-        <Toolbar add={this.add} {...this.props}/>
+        <Toolbar add = {this.add} {...this.props}/>
       </ThemeContext.Provider>
     );
   }
