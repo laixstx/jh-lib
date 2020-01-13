@@ -3,7 +3,7 @@ import {IBundleOptions} from 'father'
 // @ts-ignore
 const options: IBundleOptions = {
     // entry: 'index.tsx',
-    // file: 'beast',
+    // file: 'jh',
     // esm: {
     //     type: 'rollup',
     //     importLibToEs: true,
@@ -12,7 +12,7 @@ const options: IBundleOptions = {
     // @ts-ignore
     doc: {
         // themeConfig: { mode: 'dark' },
-        base: '/beast-lib'
+        base: '/jh-lib'
     },
     // 是否把 helper 方法提取到 @babel/runtime 里。只对 esm 有效。官网：https://babeljs.io/docs/en/babel-runtime
     runtimeHelpers: true,

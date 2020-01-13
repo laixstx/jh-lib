@@ -1,5 +1,5 @@
 import React from "react";
-import {BtConfigProvider} from "../../../../src";
+import {GlobalProvider} from "../../../../src";
 import * as localeUtils from '@/utils/localeUtils'
 import styles from './index.css';
 
@@ -8,12 +8,12 @@ console.log(localeUtils)
 function BasicLayout(props) {
 
   return (
-    <BtConfigProvider localeUtils={localeUtils}>
+    <GlobalProvider localeUtils={localeUtils}>
       <div className={styles.normal}>
         <h1 className={styles.title}>Yay! Welcome to umi!</h1>
         {props.children}
       </div>
-    </BtConfigProvider>
+    </GlobalProvider>
   );
 }
 
