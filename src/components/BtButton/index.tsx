@@ -10,7 +10,7 @@ export interface BtButtonProps {
     // /**
     //  * 你的个性化属性
     //  */
-    tt?: string
+    // tt?: string
 }
 
 export default class BtButton extends React.Component<BtButtonProps & ButtonProps> {

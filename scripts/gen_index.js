@@ -14,7 +14,11 @@ if (fs.existsSync(compDir)) {
         const stat = fs.statSync(path.join(compDir, item));
         // console.log(item, stat);
         if (stat.isDirectory() && item !== 'locale') { // 是目录的话，说明是组件
-            writeStr += `export { default as ${item} } from './components/${item}';\n`;
+            if('Config' === item) {
+                writeStr += `export * from './components/${item}';\n`;
+            } else {
+                writeStr += `export { default as ${item} } from './components/${item}';\n`;
+            }
         }
     });
     // console.log(files)

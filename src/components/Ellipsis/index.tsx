@@ -6,6 +6,7 @@ import styles from './index.module.less';
 /* eslint react/no-did-mount-set-state: 0 */
 /* eslint no-param-reassign: 0 */
 
+// @ts-ignore
 const isSupportLineClamp: boolean = document.body.style.webkitLineClamp as CSSStyleDeclaration !== undefined;
 
 const TooltipOverlayStyle = {
@@ -88,19 +89,21 @@ interface IEllipsis {
 
 export default class Ellipsis extends Component<IEllipsis, any> {
     node?: any;
-    root?:any;
-    content?:any;
-    shadow?:any;
+    root?: any;
+    content?: any;
+    shadow?: any;
     shadowChildren: {
         innerText?: any,
         textContent?: any,
         offsetHeight?: any
     };
-    constructor(props:IEllipsis){
+
+    constructor(props: IEllipsis) {
         super(props);
-        this.shadowChildren={};
+        this.shadowChildren = {};
 
     }
+
     state = {
         text: '',
         targetCount: 0,
@@ -123,6 +126,7 @@ export default class Ellipsis extends Component<IEllipsis, any> {
         const {lines} = this.props;
         if (lines && !isSupportLineClamp) {
             const text = this.shadowChildren.innerText || this.shadowChildren.textContent;
+            // @ts-ignore
             const lineHeight = parseInt(getComputedStyle(this.root).lineHeight, 10);
             const targetHeight = lines * lineHeight;
             this.content.style.height = `${targetHeight}px`;
@@ -150,7 +154,7 @@ export default class Ellipsis extends Component<IEllipsis, any> {
         }
     };
 
-    bisection = (th:any, m:any, b:any, e:any, text:any, shadowNode:any):any => {
+    bisection = (th: any, m: any, b: any, e: any, text: any, shadowNode: any): any => {
         const suffix = '...';
         let mid = m;
         let end = e;
@@ -185,23 +189,23 @@ export default class Ellipsis extends Component<IEllipsis, any> {
         return this.bisection(th, mid, begin, end, text, shadowNode);
     };
 
-    handleRoot = (n:any)=> {
+    handleRoot = (n: any) => {
         this.root = n;
     };
 
-    handleContent = (n:any) => {
+    handleContent = (n: any) => {
         this.content = n;
     };
 
-    handleNode = (n:any) => {
+    handleNode = (n: any) => {
         this.node = n;
     };
 
-    handleShadow = (n:any) => {
+    handleShadow = (n: any) => {
         this.shadow = n;
     };
 
-    handleShadowChildren = (n:any)=> {
+    handleShadowChildren = (n: any) => {
         this.shadowChildren = n;
     };
 
