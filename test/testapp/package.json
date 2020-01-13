@@ -4,8 +4,6 @@
     "start": "umi dev",
     "build": "umi build",
     "test": "umi test",
-    "lint": "eslint --ext .js src mock tests",
-    "precommit": "lint-staged"
   },
   "dependencies": {
     "dva": "^2.6.0-beta.6",
@@ -26,9 +24,6 @@
     "react-test-renderer": "^16.7.0",
     "umi": "^2.7.7",
     "umi-plugin-react": "^1.8.4"
-  },
-  "lint-staged": {
-    "*.{js,jsx}": ["eslint --fix", "git add"]
   },
   "engines": {
     "node": ">=8.0.0"
