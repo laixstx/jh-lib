@@ -7,6 +7,7 @@ import styles from './index.module.less';
 /* eslint no-param-reassign: 0 */
 
 // @ts-ignore
+//TS2339: Property 'webkitLineClamp' does not exist on type 'CSSStyleDeclaration'.
 const isSupportLineClamp: boolean = document.body.style.webkitLineClamp as CSSStyleDeclaration !== undefined;
 
 const TooltipOverlayStyle = {
@@ -78,11 +79,11 @@ const EllipsisText = ({text, length, tooltip, fullWidthRecognition, ...other}: a
 };
 
 interface IEllipsis {
-    lines?: any
+    lines?: number
     length?: number,
     className?: any,
-    tooltip?: any,
-    fullWidthRecognition?: any,
+    tooltip?: boolean,
+    fullWidthRecognition?: boolean,
     isSupportLineClamp?: any,
 
 }

@@ -7,9 +7,44 @@ import '../../docz.less'
 import { Playground, Props } from 'docz'
 import Ellipsis from './index'
 
-# Result
+# Ellipsis
 
-结果页，用于对用户进行的一系列任务处理结果进行反馈。
+文本超出显示：文本过长自动处理省略号。
+---
+title: Ellipsis
+subtitle: 文本自动省略号
+cols: 1
+order: 10
+---
+
+文本过长自动处理省略号，支持按照文本长度和最大行数两种方式截取。
+
+## API
+
+MD-US
+---
+title: Ellipsis
+cols: 1
+order: 10
+---
+
+When the text is too long, the Ellipsis automatically shortens it according to its length or the maximum number of lines.
+
+
+Property | Description | Type | Default
+----|------|-----|------
+tooltip | tooltip for showing the full text content when hovering over | boolean | -
+length | 	maximum number of characters in the text before being truncated | number | -
+lines | maximum number of rows in the text before being truncated | number | `1`
+fullWidthRecognition | whether consider full-width character length as 2 when calculate string length | boolean | -
+
+MD-CN
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+tooltip | 移动到文本展示完整内容的提示 | boolean | -
+length | 在按照长度截取下的文本最大字符数，超过则截取省略 | number | -
+lines | 在按照行数截取下最大的行数，超过则截取省略 | number | `1`
+fullWidthRecognition | 是否将全角字符的长度视为2来计算字符串长度 | boolean | -
 
 ## 代码演示
 
