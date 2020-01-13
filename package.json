@@ -1,12 +1,12 @@
 {
-  "name": "beast-lib",
-  "version": "0.1.10-beta.3",
-  "description": "(es) A React-based component library",
-  "repository": "https://github.com/laixstx/beast-lib.git",
+  "name": "jh-lib",
+  "version": "0.0.1-beta.1",
+  "description": "A React-based component library",
+  "repository": "https://github.com/laixstx/jh-lib.git",
   "keywords": [
     "react",
     "component",
-    "beast-lib"
+    "jh-lib"
   ],
   "author": "twobear",
   "license": "MIT",
@@ -43,8 +43,8 @@
   "dependencies": {
     "@babel/runtime": "^7.7.7",
     "antd": "^3.26.3",
-    "beast-utils": "^0.0.2-beta.6",
     "classnames": "^2.2.6",
+    "jh-utils": "^0.0.1-beta.2",
     "lodash-es": "^4.17.15",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

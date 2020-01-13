@@ -37,5 +37,5 @@ export default {
         // baseSeparator: '-', // 语言默认分割符 -
       },
     }],
-  ],
+  ],z
 }

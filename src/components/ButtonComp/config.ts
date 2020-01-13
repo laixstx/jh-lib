@@ -23,6 +23,9 @@ export default {
                 true, false
             ],
             "defaultValue": false
+        },
+        "text":{
+
         }
     }
 }

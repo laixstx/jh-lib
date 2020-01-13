@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {Icon} from 'antd';
 import styles from './index.module.less';
 import {ConfigConsumer} from 'antd/es/config-provider'
-import {BtConsumerProps} from '../Config'
+import {JhConsumerProps} from '../Config'
 
 export interface IResultProps {
     /**
@@ -37,9 +37,8 @@ export interface IResultProps {
 }
 
 
-
 export default class Result extends React.Component<IResultProps, any> {
-    res = ({localeUtils}: BtConsumerProps)=>{
+    res = ({localeUtils}: JhConsumerProps) => {
         const {
             className,
             type,
@@ -67,6 +66,7 @@ export default class Result extends React.Component<IResultProps, any> {
             </div>
         )
     };
+
     render(): React.ReactNode {
         return (
             <ConfigConsumer>

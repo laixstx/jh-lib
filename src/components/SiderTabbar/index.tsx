@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse, Icon, Popover, Tabs, Tag} from 'antd';
 import styles from './index.module.less';
-import {isObjectValEqual, sort} from 'beast-utils';
+import {isObjectValEqual, sort} from 'jh-utils';
 import {find} from 'lodash-es';
 
 const {Panel} = Collapse;
