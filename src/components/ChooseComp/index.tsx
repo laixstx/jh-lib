@@ -6,15 +6,57 @@ import { reqGet } from '@/utils/request';
 import { isObjectValEqual } from '@/utils/utils';
 import { appCodes, appConfig } from '@/appConfig';
 import styles from './index.less';
-import ModalComp from '@/components/ModalItem/ModalComp';
+import ModalComp from '../ModalItem/ModalComp';
 import { formatMsgByCn, myFormatMessage } from '@/utils/localeUtils';
 
 const { Search, Group } = Input;
 
-@connect(({ global }) => ({
-  global,
-}))
-class ChooseCompForm extends Component {
+// @connect(({ global }) => ({
+//   global,
+// }))
+/**
+ * 选择组件
+ * @type {{defaultSearchData: {}, mode: string, checkedList: Array, listApi: string, typeList: Array, typeAppCode: string, typeCode: string}}
+ */
+export interface ChooseCompFormProps {
+  /**
+   * fetchFunc Function 获取列表的方法，返回一个 promise，参数是 列表数组
+   */
+  fetchFunc: null, // Function 获取列表的方法，返回一个 promise，参数是 列表数组
+  /**
+   * listApi String 列表的 api 路径,
+   */
+  listApi: '', // String 列表的 api 路径,
+  /**
+   * typeCode String 获取分类数据接口（findByCode）的 code 字段,
+   */
+  typeCode: '', //String 获取分类数据接口（findByCode）的 code 字段,
+  /**
+   * typeAppCode String 获取分类数据接口（findByAppCode）的 appCode 字段,
+   */
+  typeAppCode: '', // String 获取分类数据接口（findByAppCode）的 appCode 字段,
+  /**
+   * appCode String 主数据的
+   */
+  appCode: '', // String 主数据的
+  /**
+   * defaultSearchData Object 默认的搜索条件
+   */
+  defaultSearchData: {}, //Object 默认的搜索条件
+  /**
+   * checkedList 已选中的数据数组
+   */
+  checkedList: [], // 已选中的数据数组
+  /**
+   * mode 选择模式，'multi'：多选；空值或其他值：单选
+   */
+  mode: 'multi', // 选择模式，'multi'：多选；空值或其他值：单选
+  /**
+   * showChecked Boolean 是否显示已选的数据
+   */
+  showChecked: true, // Boolean 是否显示已选的数据
+};
+class ChooseCompForm extends Component<ChooseCompFormProps> {
 
   constructor(props) {
     super(props);
@@ -321,21 +363,7 @@ class ChooseCompForm extends Component {
   }
 }
 
-/**
- * 选择组件
- * @type {{defaultSearchData: {}, mode: string, checkedList: Array, listApi: string, typeList: Array, typeAppCode: string, typeCode: string}}
- */
-ChooseCompForm.defaultProps = {
-  fetchFunc: null, // Function 获取列表的方法，返回一个 promise，参数是 列表数组
-  listApi: '', // String 列表的 api 路径,
-  typeCode: '', //String 获取分类数据接口（findByCode）的 code 字段,
-  typeAppCode: '', // String 获取分类数据接口（findByAppCode）的 appCode 字段,
-  appCode: '', // String 主数据的
-  defaultSearchData: {}, //Object 默认的搜索条件
-  checkedList: [], // 已选中的数据数组
-  mode: 'multi', // 选择模式，'multi'：多选；空值或其他值：单选
-  showChecked: true, // Boolean 是否显示已选的数据
-};
+
 
 export default class ChooseComp extends Component {
 

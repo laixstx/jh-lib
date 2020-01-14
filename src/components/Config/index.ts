@@ -6,7 +6,8 @@ interface LocaleUtilsProps {
 }
 
 export interface GlobalProviderProps {
-    localeUtils?: any
+    localeUtils?: any;
+    global?: any;
 }
 
 export type JhConsumerProps = ConfigConsumerProps & GlobalProviderProps;
