@@ -1,3 +1,3 @@
 #!/bin/sh
 yarn doc:build
-yarn doc:deploy
+yarn doc:dep
