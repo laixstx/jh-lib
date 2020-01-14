@@ -1,0 +1,54 @@
+---
+name: ButtonComp 按钮
+route: /button
+menu: Components
+---
+import '../../docz.less'
+import { Playground, Props } from 'docz'
+import ButtonComp, {ButtonComp_} from './index'
+
+# ButtonComp
+
+按钮组件。
+基于 antd 的 Button 组件封装。
+
+## 代码演示
+
+这个只是演示部分个性化示例，更多演示见 [这里](https://ant.design/components/button-cn/)
+
+### 按钮类型
+
+<Playground>
+    <ButtonComp type="primary">Primary</ButtonComp>
+    <ButtonComp>Default</ButtonComp>
+    <ButtonComp type="dashed">Dashed</ButtonComp>
+    <ButtonComp type="danger">Danger</ButtonComp>
+    <ButtonComp type="link">Link</ButtonComp>
+</Playground>
+
+### 图标按钮
+
+<Playground>
+    <ButtonComp type="primary" shape="circle" icon="search" />
+    <ButtonComp type="primary" shape="circle">
+      A
+    </ButtonComp>
+    <ButtonComp type="primary" icon="search">
+      Search
+    </ButtonComp>
+    <ButtonComp shape="circle" icon="search" />
+    <ButtonComp icon="search">Search</ButtonComp>
+    <br />
+    <ButtonComp shape="circle" icon="search" />
+    <ButtonComp icon="search">Search</ButtonComp>
+    <ButtonComp type="dashed" shape="circle" icon="search" />
+    <ButtonComp type="dashed" icon="search">
+      Search
+    </ButtonComp>
+</Playground>
+
+## API
+
+> 支持 antd [ButtonComp](https://ant.design/components/button-cn/#API) 的其他所有属性
+
+<Props of={ButtonComp_} />

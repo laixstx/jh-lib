@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Upload, Icon, message } from 'antd';
 import {isFunction} from 'lodash-es';
-import { getGID } from 'beast-utils';
+import { getGID } from 'jh-utils';
 interface IUploadDragger {
     isPreviewMode?:boolean,
     changeUploadCb?:any,

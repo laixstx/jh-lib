@@ -1,4 +1,5 @@
-# beast-lib
+# jh-lib
+
 这一个 React 组件库。
 
 * 一些中后台系统常用组件
@@ -7,12 +8,31 @@
 * 此文档发布于仓库的 [gh-pages](https://github.com/laixstx/beast-lib/tree/gh-pages) 分支
 
 
+### 安装
+
+```bash
+$ npm install jh-lib --save
+```
+
+或
+
+```bash
+$ yarn add jh-lib
+```
+
+### 引入使用
+
+```javascript
+import { ButtonComp } from 'jh-lib'; // 引入 ButtonComp 组件
+```
+
+
 ### 仓库地址
 
-[https://github.com/laixstx/beast-lib](https://github.com/laixstx/beast-lib)
+[https://github.com/laixstx/jh-lib](https://github.com/laixstx/jh-lib)
 
 ### 在线文档
-[https://laixstx.github.io/beast-lib/](https://laixstx.github.io/beast-lib/)
+[https://laixstx.github.io/jh-lib/](https://laixstx.github.io/jh-lib/)
 
 ### 更多
-常用工具库：[beast-utils](https://github.com/laixstx/beast-utils)
+常用工具库：[jh-utils](https://github.com/laixstx/jh-utils)

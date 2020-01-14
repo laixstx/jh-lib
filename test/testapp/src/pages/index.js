@@ -1,10 +1,9 @@
 import styles from './index.css';
 import React from 'react';
-// import {BtButton} from '../components';
-import BtButton from '../../../../src/components/BtButton';
-import {Result} from '../../../../src'
-import {setLocale} from 'umi-plugin-locale';
-
+import {BtButton,} from '../components';
+import {BtConfigProvider,Result} from '../../../../src'
+import * as localeUtils from '@/utils/localeUtils'
+import { formatMessage, setLocale } from 'umi-plugin-locale';
 
 const ThemeContext = React.createContext('link');
 

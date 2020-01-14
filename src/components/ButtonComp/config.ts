@@ -20,9 +20,12 @@ export default {
             "required": false,
             "name": "背景透明",
             "values": [
-                "default", "small", "large"
+                true, false
             ],
-            "defaultValue": "default"
+            "defaultValue": false
+        },
+        "text":{
+
         }
     }
 }

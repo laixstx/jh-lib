@@ -3,9 +3,7 @@
   "scripts": {
     "start": "umi dev",
     "build": "umi build",
-    "test": "umi test",
-    "lint": "eslint --ext .js src mock tests",
-    "precommit": "lint-staged"
+    "test": "umi test"
   },
   "dependencies": {
     "dva": "^2.6.0-beta.6",

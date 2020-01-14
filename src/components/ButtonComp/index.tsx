@@ -6,14 +6,14 @@ import styles from './index.module.less'
 /**
  * 个性化的属性
  */
-export interface BtButtonProps {
+export interface ButtonCompProps {
     // /**
     //  * 你的个性化属性
     //  */
     // tt?: string
 }
 
-export default class BtButton extends React.Component<BtButtonProps & ButtonProps> {
+export default class ButtonComp extends React.Component<ButtonCompProps & ButtonProps> {
 
     static Group = Button.Group;
 
@@ -22,7 +22,7 @@ export default class BtButton extends React.Component<BtButtonProps & ButtonProp
     }
 }
 
-export class BtButton_ extends React.Component<BtButtonProps> {
+export class ButtonComp_ extends React.Component<ButtonCompProps> {
     render(): React.ReactNode {
         return null;
     }
