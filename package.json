@@ -24,7 +24,7 @@
     "build": "sh ./scripts/es_build.sh",
     "doc:dev": "father doc dev",
     "doc:build": "father doc build",
-    "doc:deploy": "father doc deploy",
+    "doc:dep": "father doc deploy",
     "doc:sh": "sh ./scripts/doc_deploy.sh",
     "npm:reg": "npm config set registry https://registry.npmjs.org/ && npm publish",
     "npm:tb": "npm config set registry http://registry.npm.taobao.org/"
