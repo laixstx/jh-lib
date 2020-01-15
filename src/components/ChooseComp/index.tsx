@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Button, Card, Checkbox, Col, Divider, Icon, Input, List, Menu, Row, Spin } from 'antd';
-import { isArray, map, isFunction, find, findIndex, differenceBy } from 'lodash-es';
-import { connect } from 'dva';
+import {isArray, map, isFunction, find, findIndex, differenceBy, isEmpty} from 'lodash-es';
+//import { connect } from 'dva';
 import { reqGet } from '@/utils/request';
-import { isObjectValEqual } from '@/utils/utils';
-import { appCodes, appConfig } from '@/appConfig';
+import { isObjectValEqual } from 'beast-utils';
+//import { appCodes, appConfig } from '@/appConfig';
 import styles from './index.less';
 import ModalComp from '../ModalItem/ModalComp';
-import { formatMsgByCn, myFormatMessage } from '@/utils/localeUtils';
+//import { formatMsgByCn, myFormatMessage } from '@/utils/localeUtils';
+import {JhConsumerProps} from '../Config'
+import {ConfigConsumer} from 'antd/es/config-provider'
 
 const { Search, Group } = Input;
 
@@ -56,13 +58,14 @@ export interface ChooseCompFormProps {
    */
   showChecked: true, // Boolean 是否显示已选的数据
 };
-class ChooseCompForm extends Component<ChooseCompFormProps> {
+class ChooseCompForm extends Component<ChooseCompFormProps, any> {
 
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
       list: [],
+      typeDataList: [],
       checkedList: props.checkedList || [], // 已选中的选项
     };
     this.searchData = {
@@ -76,33 +79,23 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
 
   componentDidMount() {
     isFunction(this.props.onRef) && (this.props.onRef(this.props.refKey, this));
-    const comboType = this._getTypeComboType();
-
-    if (comboType) {
-      // 获取分类
-      const { dispatch } = this.props;
-      const $this = this;
-      const actionObj = {};
-      if (this.props.typeCode) {
-        actionObj.type = `global/findByCode`;
-        actionObj.payload = {
-          code: comboType,
-        };
-      } else {
-        actionObj.type = `global/findByAppCode`;
-        actionObj.payload = {
-          appCode: comboType,
-        };
+    let $this = this
+    const {service: {typeGet}, comboType} = $this.props;
+    if (!isEmpty(comboType)) {
+      let dataAjax = {...comboType}
+      if (isFunction(typeGet)) {
+        typeGet(dataAjax).then((rsp: any) => {
+          if (rsp && 200 === rsp.status && isArray(rsp.data) && rsp.data.length > 0) {
+            //类型 typeList
+            $this.searchData.category = rsp.data[0]['code'];
+            this.setState({
+              typeDataList: rsp.data
+            }, () => $this.fetchList())
+          }
+        });
       }
-
-      dispatch(actionObj).then((rsp) => {
-        if (rsp && 200 === rsp.status && isArray(rsp.data) && rsp.data.length > 0) {
-          $this.searchData.category = rsp.data[0]['code'];
-          $this.fetchList();
-        }
-      });
     } else {
-      this.fetchList();
+      $this.fetchList();
     }
   }
 
@@ -132,7 +125,7 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
   fetchList() {
     const $this = this;
     if (this.props.listApi) {
-      this.setState({ loading: true }, () => {
+      this.setState({loading: true}, () => {
         reqGet(this.props.listApi, this.searchData).then(rsp => {
           let list = [];
           if (rsp && 200 === rsp.status && rsp.data) {
@@ -149,7 +142,7 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
         });
       });
     } else if (isFunction(this.props.fetchFunc)) {
-      this.setState({ loading: true }, () => {
+      this.setState({loading: true}, () => {
         this.props.fetchFunc(this.searchData).then(dataList => {
           $this.setState({
             list: isArray(dataList) ? dataList : [],
@@ -160,13 +153,9 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
     }
   }
 
-  _getTypeComboType(props) {
-    const { typeCode, typeAppCode } = props || this.props;
-    return typeCode || typeAppCode || '';
-  }
 
   // 点击分类
-  handleClickType(e) {
+  handleClickType(e: any) {
     // console.log('e', e);
     this.searchData.category = e.key;
     this.searchData.current = 1;
@@ -174,12 +163,12 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
   }
 
   // 触发搜索
-  handleSearch(value) {
+  handleSearch(value: any) {
     this.searchData.search = value;
     this.fetchList();
   }
 
-  handleChange(record) {
+  handleChange(record: object) {
     // console.log(record);
     // const isChecked = e.target.checked;
 
@@ -205,7 +194,7 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
 
   // 全选
   handleCheckAll() {
-    const { list, checkedList } = this.state;
+    const {list, checkedList} = this.state;
     const unCheckedList = differenceBy(list, checkedList, 'id');
     this.setState({
       checkedList: unCheckedList.concat(checkedList),
@@ -214,7 +203,7 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
 
   // 反选
   handleCheckAllInstead() {
-    const { list, checkedList } = this.state;
+    const {list, checkedList} = this.state;
     const unCheckedList = differenceBy(list, checkedList, 'id');
     const withoutList = differenceBy(checkedList, list, 'id');
 
@@ -240,173 +229,194 @@ class ChooseCompForm extends Component<ChooseCompFormProps> {
   }
 
   render() {
-    const { global, showChecked } = this.props;
-    const comboType = this._getTypeComboType();
-    const { checkedList, list } = this.state;
-    const typeList = global[comboType] || [];
-    const dataSource = showChecked ? list : list.filter(v => (-1 === findIndex(this.props.checkedList, { id: v.id })));
-    const configObj = appConfig[this.props.appCode] || {};
+    const {showChecked, config, localeUtils: {formatMsgByCn, myFormatMessage} }= this.props;
+    const {checkedList, list, typeDataList} = this.state;
+    const typeList = typeDataList || [];
+    const dataSource = showChecked ? list : list.filter(v => (-1 === findIndex(this.props.checkedList, {id: v.id})));
+    const configObj = config || {};
 
     const wrapH = document.body.offsetHeight - 280, cardHeadH = 50, cardBodyH = wrapH - cardHeadH;
 
     return (
-      <Row type="flex" className={'bd1'} style={{ height: wrapH }}>
-        {typeList.length > 0 && (
-          <Col span={4} className={'bdr1'}>
-            <Menu
-              onClick={this.handleClickType.bind(this)}
-              defaultSelectedKeys={['1']}
-              mode="inline"
-              style={{ border: 'none' }}
+        <Row type="flex" className={'bd1'} style={{height: wrapH}}>
+          {typeList.length > 0 && (
+              <Col span={4} className={'bdr1'}>
+                <Menu
+                    onClick={this.handleClickType.bind(this)}
+                    defaultSelectedKeys={['1']}
+                    mode="inline"
+                    style={{border: 'none'}}
+                >
+                  {
+                    //左边菜单栏
+                    map(typeList, (v) => (
+                        <Menu.Item style={{margin: 0}} key={v.code}>{v.name}</Menu.Item>
+                    ))
+                  }
+                </Menu>
+              </Col>
+          )}
+
+          <Col span={typeList.length > 0 ? 20 : 24}>
+            <Card
+                size="small"
+                style={{height: '100%'}}
+                bordered={false}
+                headStyle={{height: cardHeadH, display: 'flex'}}
+                bodyStyle={{height: cardBodyH, overflowY: 'auto'}}
+                type="inner"
+                title={<Search
+                    style={{width: 200, marginRight: 8}}
+                    placeholder={myFormatMessage('comp.search.placeholder')}
+                    onSearch={this.handleSearch.bind(this)}
+                    onKeyDown={(e) => {
+                      e.stopPropagation();
+                    }}
+                />}
+                extra={
+                  <>
+                    {
+                      'multi' === this.props.mode ?
+                          <>
+                            <a href='javascript:;' onClick={this.handleCheckAll.bind(this)}>
+                              {myFormatMessage('crud.sel-all')}
+                            </a>
+                            <Divider type="vertical"/>
+                            <a href='javascript:;' onClick={this.handleCheckAllInstead.bind(this)}>
+                              {myFormatMessage('crud.un-sel')}
+                            </a>
+                            <Divider type="vertical"/>
+                            <a href='javascript:;' style={{marginRight: configObj.modelName ? 50 : 0}}
+                               onClick={this.handleCheckReset.bind(this)}>
+                              {myFormatMessage('crud.sel-clear')}
+                            </a>
+                          </> :
+                          null
+                    }
+                    {
+                      configObj.modelName ? (
+                          <Button size={'small'}
+                                  className={styles.hRightBtn}
+                                  title={myFormatMessage('comp.blank.view-all', {
+                                    name: formatMsgByCn(configObj.cn) || '',
+                                  })}
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    // window.open(`./#/${configObj.modelName}`, '_blank');
+                                    window.openWin(`./#/${configObj.modelName}`, '_blank');
+                                    // newWin.IS_OPEN = true; // 标识该窗口是新打开的，用于新窗口关闭自己的逻辑
+                                  }}>
+                            <Icon type="double-right"/>
+                          </Button>
+                          // <a title={`转到${configObj.cn || ''}`}
+                          //    href={`./#/${configObj.modelName}`}
+                          //    target={'_blank'}><Icon type="double-right"/></a>
+                      ) : null
+                    }
+                  </>
+                }
             >
-              {
-                //左边菜单栏
-                map(typeList, (v) => (
-                  <Menu.Item style={{ margin: 0 }} key={v.code}>{v.name}</Menu.Item>
-                ))
-              }
-            </Menu>
+              <Spin spinning={this.state.loading}>
+                <List
+                    dataSource={dataSource}
+                    renderItem={item => (
+                        <List.Item key={item.id}
+                                   style={{padding: '8px 0', cursor: 'pointer'}}
+                                   onClick={(e) => {
+
+                                     this.handleChange(item);
+                                   }}>
+                          <Checkbox
+                              checked={-1 !== findIndex(checkedList, {id: item.id})}
+
+                              // filter(v => (-1 === findIndex(this.props.checkedList, { id: v.id })));
+                              // onChange={this.handleChange.bind(this, item)}
+                              // style={{ width: '100%', display: 'block', padding: '8px 0' }}
+                          /> {item.code} {item.name}
+                        </List.Item>
+                    )}
+                >
+                </List>
+              </Spin>
+            </Card>
+            {/*{this.state.loading && this.state.hasMore && (*/}
+            {/*  <div className="demo-loading-container">*/}
+            {/*    <Spin />*/}
+            {/*  </div>*/}
+            {/*)}*/}
           </Col>
-        )}
-
-        <Col span={typeList.length > 0 ? 20 : 24}>
-          <Card
-            size="small"
-            style={{ height: '100%' }}
-            bordered={false}
-            headStyle={{ height: cardHeadH, display: 'flex' }}
-            bodyStyle={{ height: cardBodyH, overflowY: 'auto' }}
-            type="inner"
-            title={<Search
-              style={{ width: 200, marginRight: 8 }}
-              placeholder={myFormatMessage('comp.search.placeholder')}
-              onSearch={this.handleSearch.bind(this)}
-              onKeyDown={(e) => {
-                e.stopPropagation();
-              }}
-            />}
-            extra={
-              <>
-                {
-                  'multi' === this.props.mode ?
-                    <>
-                      <a href='javascript:;' onClick={this.handleCheckAll.bind(this)}>
-                        {myFormatMessage('crud.sel-all')}
-                      </a>
-                      <Divider type="vertical"/>
-                      <a href='javascript:;' onClick={this.handleCheckAllInstead.bind(this)}>
-                        {myFormatMessage('crud.un-sel')}
-                      </a>
-                      <Divider type="vertical"/>
-                      <a href='javascript:;' style={{ marginRight: configObj.modelName ? 50 : 0 }}
-                         onClick={this.handleCheckReset.bind(this)}>
-                        {myFormatMessage('crud.sel-clear')}
-                      </a>
-                    </> :
-                    null
-                }
-                {
-                  configObj.modelName ? (
-                    <Button size={'small'}
-                            className={styles.hRightBtn}
-                            title={myFormatMessage('comp.blank.view-all', {
-                              name: formatMsgByCn(configObj.cn) || '',
-                            })}
-                            onClick={e => {
-                              e.preventDefault();
-                              // window.open(`./#/${configObj.modelName}`, '_blank');
-                              window.openWin(`./#/${configObj.modelName}`, '_blank');
-                              // newWin.IS_OPEN = true; // 标识该窗口是新打开的，用于新窗口关闭自己的逻辑
-                            }}>
-                      <Icon type="double-right"/>
-                    </Button>
-                    // <a title={`转到${configObj.cn || ''}`}
-                    //    href={`./#/${configObj.modelName}`}
-                    //    target={'_blank'}><Icon type="double-right"/></a>
-                  ) : null
-                }
-              </>
-            }
-          >
-            <Spin spinning={this.state.loading}>
-              <List
-                dataSource={dataSource}
-                renderItem={item => (
-                  <List.Item key={item.id}
-                             style={{ padding: '8px 0', cursor: 'pointer' }}
-                             onClick={(e) => {
-
-                               this.handleChange(item);
-                             }}>
-                    <Checkbox
-                      checked={-1 !== findIndex(checkedList, { id: item.id })}
-
-                      // filter(v => (-1 === findIndex(this.props.checkedList, { id: v.id })));
-                      // onChange={this.handleChange.bind(this, item)}
-                      // style={{ width: '100%', display: 'block', padding: '8px 0' }}
-                    /> {item.code} {item.name}
-                  </List.Item>
-                )}
-              >
-              </List>
-            </Spin>
-          </Card>
-          {/*{this.state.loading && this.state.hasMore && (*/}
-          {/*  <div className="demo-loading-container">*/}
-          {/*    <Spin />*/}
-          {/*  </div>*/}
-          {/*)}*/}
-        </Col>
-      </Row>
+        </Row>
     )
-      ;
+        ;
   }
+  }
+
 }
-
-
-
-export default class ChooseComp extends Component {
-
-  // 确认 选择科目
-  handleOk(e) {
-    // console.log(e)
-    const checkedList = [...this.chooseRef.getAjaxData()];
-    this.props.onOk && this.props.onOk(checkedList);
-  }
-
-  render() {
-    const configObj = appConfig[this.props.appCode] || {};
-
-    return (
-      <ModalComp
-        title={this.props.title || formatMsgByCn(configObj.cn) || ''}
-        width={document.body.offsetWidth > 1200 ? document.body.offsetWidth * 0.5 : 520}
-        visible={this.props.visible}
-        onOk={this.handleOk.bind(this)}
-        onCancel={this.props.onCancel}
-        zIndex={1050}
-        {...this.props.modalProps}
-      >
-        <ChooseCompForm
-          {...this.props}
-          onRef={((refK, ref) => {
-            this.chooseRef = ref;
-          })}
-        />
-      </ModalComp>
-    );
-  }
-}
-
-ChooseComp.defaultProps = {
-  ...ChooseCompForm.defaultProps,
-  modalProps: {},
-  visible: false, // Boolean 是否显示
-  title: '', // String （选传）自定义标题
-  onOk: null, // Function “确认选择”之后的回调；
+export interface ChooseCompProps extends ChooseCompFormProps {
+  /**
+   * modalProps 额外参数
+   */
+  modalProps: {};
+  /**
+   * visible Boolean 是否显示
+   */
+  visible: false; // Boolean 是否显示
+  /**
+   * title String （选传）自定义标题
+   */
+  title: ''; // String （选传）自定义标题
+  /**
+   * onOk Function “确认选择”之后的回调；@params checkedList Array 选中的数据数组
+   */
+  onOk: null; // Function “确认选择”之后的回调；
               // @params checkedList Array 选中的数据数组
               // (checkedList) => {}
-  onCancel: null, // Function “取消选择”的回调
+  /**
+   * onCancel Function “取消选择”的回调
+   */
+  onCancel: null; // Function “取消选择”的回调
 };
+
+export default class ChooseComp extends Component<ChooseCompProps,any> {
+
+  // 确认 选择科目
+  handleOk(e: any) {
+    // console.log(e)
+    const checkedList = [...this.chooseRef.getAjaxData()];
+
+    this.props.onOk && this.props.onOk(checkedList);
+  }
+  ChooseComp = (context: JhConsumerProps)=>{
+    const {config,localeUtils:{formatMsgByCn,myFormatMessage}} = context;
+    const configObj = config || {};
+
+    return (
+        <ModalComp
+            title={this.props.title || formatMsgByCn(configObj.cn) || ''}
+            width={document.body.offsetWidth > 1200 ? document.body.offsetWidth * 0.5 : 520}
+            visible={this.props.visible}
+            onOk={this.handleOk.bind(this)}
+            onCancel={this.props.onCancel}
+            zIndex={1050}
+            {...this.props.modalProps}
+        >
+          <ChooseCompForm
+              {...context}
+              {...this.props}
+              onRef={((refK, ref) => {
+                this.chooseRef = ref;
+              })}
+          />
+        </ModalComp>
+    );
+  };
+  render() {
+    return (
+        <ConfigConsumer>
+          {this.ChooseComp}
+        </ConfigConsumer>
+    )
+  }
+}
 
 
