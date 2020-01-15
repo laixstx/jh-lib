@@ -15,7 +15,7 @@ export interface IGlobalFooterProps {
 
 
 export default class GlobalFooter extends React.Component<IGlobalFooterProps, any> {
-    constructor(props:object){
+    constructor(props:IGlobalFooterProps){
         super(props)
     }
     render(): React.ReactNode{
