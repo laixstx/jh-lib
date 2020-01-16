@@ -8,13 +8,24 @@ const {Panel} = Collapse;
 const {TabPane} = Tabs;
 
 interface ISiderTabbar {
+    /**
+     * 后端返回数据
+     */
     compData?: Array<any>;
-
+    /**
+     * 动态参数
+     */
     [propName: string]: any;
 }
 
 interface SubItem {
+    /**
+     * 标识
+     */
     code?:string,
+    /**
+     * 名字
+     */
     name?:string
 }
 

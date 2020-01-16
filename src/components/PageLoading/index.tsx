@@ -3,20 +3,37 @@ import {Spin} from 'antd';
 import {SpinProps} from 'antd/es/Spin'
 import styles from './index.module.less'
 
-/**
- * 个性化的属性
- */
 export interface PageLoadingProps {
-    // /**
-    //  * 你的个性化属性
-    //  */
-    // tt?: string
+    /**
+     * 延迟显示加载效果的时间（防止闪烁）
+     */
+    delay?: number,
+    /**
+     * 加载指示符
+     */
+    indicator?: React.ReactNode,
+    /**
+     * 组件大小
+     */
+    size?: string,
+    /**
+     * 是否为加载中状态
+     */
+    spinning?: boolean,
+    /**
+     * 当作为包裹元素时，可以自定义描述文案
+     */
+    tip?: string,
+    /**
+     * 包装器的类属性
+     */
+    wrapperClassName?: string
 }
 
 export default class PageLoading extends React.Component<SpinProps & PageLoadingProps> {
-/**
- * NProgress对象未知是哪个上下文所有
- */
+    /**
+     * NProgress对象未知是哪个上下文所有
+     */
     // componentDidMount():void {
     //     if ('undefined' !== typeof NProgress) {
     //       NProgress.start();
@@ -24,20 +41,20 @@ export default class PageLoading extends React.Component<SpinProps & PageLoading
     //       // NProgress.set(30000000);
     //     }
     //   }
-    
+
     //   componentWillUnmount():void {
     //     if ('undefined' !== typeof NProgress) {
     //       NProgress.done();
     //     }
     //   }
-    
-      render():React.ReactNode {
+
+    render(): React.ReactNode {
         return (
-          <div className={'page-loading'}  style={{ paddingTop: 100, textAlign: 'center' }}>
-            <Spin {...this.props} />
-          </div>
+            <div className={'page-loading'} style={{paddingTop: 100, textAlign: 'center'}}>
+                <Spin {...this.props} />
+            </div>
         );
-      }
+    }
 }
 
 export class PageLoading_ extends React.Component<PageLoadingProps> {
