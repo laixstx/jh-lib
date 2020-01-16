@@ -29,12 +29,16 @@ export interface ModalCompProps {
      * onCancel Function 点击取消后的回调
      * */
     onCancel: null; // 点击取消后的回调
+    /**
+     * 是否显示详情
+     * */
+    isShowDetail?: boolean
 };
 
 class ModalComp extends React.Component<ModalCompProps, any> {
-    modal = (context: JhConsumerProps)=>{
+    modal = (context: JhConsumerProps) => {
         const {action, loading} = this.props;
-        const moreProps = {
+        const moreProps: any = {
             ...omit(this.props, ['action', 'loading']),
         };
         if (!isEmpty(action)) {
