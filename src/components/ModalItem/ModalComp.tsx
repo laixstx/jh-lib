@@ -1,6 +1,8 @@
 import {Modal, Spin} from 'antd';
 import React from 'react';
 import {isEmpty, omit} from 'lodash-es';
+import {JhConsumerProps} from "../Config";
+import {ConfigConsumer} from "antd/es/config-provider";
 
 export interface ModalCompProps {
     /**
@@ -30,8 +32,7 @@ export interface ModalCompProps {
 };
 
 class ModalComp extends React.Component<ModalCompProps, any> {
-
-    render() {
+    modal = (context: JhConsumerProps)=>{
         const {action, loading} = this.props;
         const moreProps = {
             ...omit(this.props, ['action', 'loading']),
@@ -55,6 +56,14 @@ class ModalComp extends React.Component<ModalCompProps, any> {
                 </Spin>
             </Modal>
         );
+    }
+
+    render() {
+        return (
+            <ConfigConsumer>
+                {this.modal}
+            </ConfigConsumer>
+        )
     }
 }
 
