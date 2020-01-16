@@ -60,7 +60,7 @@ export interface ChooseCompFormProps {
 };
 class ChooseCompForm extends Component<ChooseCompFormProps, any> {
 
-  constructor(props) {
+  constructor(props:ChooseCompFormProps) {
     super(props);
     this.state = {
       loading: false,
