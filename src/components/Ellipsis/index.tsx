@@ -79,11 +79,29 @@ const EllipsisText = ({text, length, tooltip, fullWidthRecognition, ...other}: a
 };
 
 interface IEllipsis {
+    /**
+     * 链接
+     */
     lines?: number
+    /**
+     * 数组长度
+     */
     length?: number,
+    /**
+     * 样式
+     */
     className?: any,
+    /**
+     * 工具提示
+     */
     tooltip?: boolean,
+    /**
+     * 溢出宽度识别
+     */
     fullWidthRecognition?: boolean,
+    /**
+     * 判断条件
+     */
     isSupportLineClamp?: any,
 
 }

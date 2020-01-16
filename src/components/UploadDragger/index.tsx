@@ -3,10 +3,25 @@ import { Upload, Icon, message } from 'antd';
 import {isFunction} from 'lodash-es';
 import { getGID } from 'jh-utils';
 interface IUploadDragger {
+    /**
+     * 是否为预览模式
+     */
     isPreviewMode?:boolean,
+    /**
+     * 上传文件回传
+     */
     changeUploadCb?:any,
+    /**
+     * 图片上传之前的回调，当用户选择本地文件之后，会回调此方法
+     */
     onBeforeUploadCb(thumbUrl:string,originFileObj:any):any,
+    /**
+     * 关闭预览效果,显示上传操作
+     */
     closePreviewCb?:any
+    /**
+     * 预览文件的相关信息
+     */
     previewFile?:any
 }
 const Dragger:any = Upload.Dragger;
