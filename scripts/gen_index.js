@@ -25,7 +25,7 @@ if (fs.existsSync(compDir)) {
 
     // 更新 src/index.tsx 的内容
     if (fs.existsSync(path.join(rootDir, 'src'))) {
-        const indexFile = fs.openSync(path.join(rootDir, 'src', 'index.tsx'), 'w');
+        const indexFile = fs.openSync(path.join(rootDir, 'src', 'index.tsx.tsx.tsx'), 'w');
         const wStat = fs.writeFileSync(indexFile, writeStr);
         fs.closeSync(indexFile);
 

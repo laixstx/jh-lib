@@ -6,9 +6,28 @@ interface LocaleUtilsProps {
 }
 
 export interface GlobalProviderProps {
+    /**
+     * localeUtils 国际化配置项 formatMsgByCn myFormatMessage
+     * */
     localeUtils?: any;
+    /**
+     * global 具体项目全局属性
+     * */
     global?: any;
+    /**
+     * config appConfig配置项
+     * */
     config?: any;
+    /**
+     * service 请求服务
+     * */
+    service?: any;
+    /**
+     * request 请求服务的特殊配置
+     * abortFetch(), newAbortCtrl()
+     * */
+    request?: any;
+
 }
 
 export type JhConsumerProps = ConfigConsumerProps & GlobalProviderProps;

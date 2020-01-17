@@ -24,7 +24,7 @@
     "build": "sh ./scripts/es_build.sh",
     "doc:dev": "father doc dev",
     "doc:build": "father doc build",
-    "doc:deploy": "father doc deploy",
+    "doc:dep": "father doc deploy",
     "doc:sh": "sh ./scripts/doc_deploy.sh",
     "npm:reg": "npm config set registry https://registry.npmjs.org/ && npm publish",
     "npm:tb": "npm config set registry http://registry.npm.taobao.org/"
@@ -45,6 +45,7 @@
     "antd": "^3.26.3",
     "classnames": "^2.2.6",
     "jh-utils": "^0.0.1-beta.2",
+    "js-utils": "^2.1.0",
     "lodash-es": "^4.17.15",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
