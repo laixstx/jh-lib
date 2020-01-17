@@ -8,32 +8,34 @@ import {JhConsumerProps} from '../Config'
 
 // @connect(({ global: { appCode, userInfo } }) => ({ appCode, userInfo }))
 export interface ModalItemProps extends ModalCompProps{
-  actionType: 'save',
+
 }
-class ModalItem extends React.Component<ModalItemProps,any> {
+class ModalItem extends React.Component<ModalItemProps> {
 
    modalIt = (context: JhConsumerProps)=>{
-     const {localeUtils:{myFormatMessage,formatMsgByCn},global:{appCode, userInfo}} = context;
-     const moreProps = {};
+     const {localeUtils} = context;
+     const moreProps: any = {};
      // 如果没有保存权限，则隐藏 【确认】 按钮
 
-     moreProps.okButtonProps = { ...(this.props.okButtonProps || {}), disabled: true, style: { display: 'none' } };
-     moreProps.cancelText = formatMsgByCn('返回');
+     moreProps.okButtonProps = localeUtils&&localeUtils.formatMsgByCn('确定');
+     moreProps.cancelText = localeUtils&&localeUtils.formatMsgByCn('返回');
 
      // title 的国际化处理
      let { title } = this.props;
      if (isString(title)) {
        let editInd = title.indexOf('编辑');
        if (-1 !== editInd) {
-         title = myFormatMessage('crud.edit') + formatMsgByCn(title.substr(editInd + 2));
+         title = localeUtils&&localeUtils.myFormatMessage('crud.edit') + localeUtils&&localeUtils.formatMsgByCn(title.substr(editInd + 2));
        }
-
+        // @ts-ignore
        let addInd = title.indexOf('新建');
-       let addInd1 = title.indexOf('新增');
+         // @ts-ignore
+         let addInd1 = title.indexOf('新增');
        addInd = -1 === addInd ? addInd1 : addInd;
 
        if (-1 !== addInd) {
-         title = myFormatMessage('crud.add') + formatMsgByCn(title.substr(addInd + 2));
+         // @ts-ignore
+           title = localeUtils&&localeUtils.myFormatMessage('crud.add') + localeUtils&&localeUtils.formatMsgByCn(title.substr(addInd + 2));
        }
      }
 
