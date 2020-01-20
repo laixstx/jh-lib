@@ -1,68 +1,161 @@
 import React, { Component } from 'react';
-import { Button, Divider, Empty, Icon, Input, Select, Spin } from 'antd';
+import { Button, Divider, Empty, Icon, Input, Select, Spin, message } from 'antd';
 import { find, isEmpty, map, isFunction, isArray, omit, pick, isNumber } from 'lodash-es';
-import { abortFetch, newAbortCtrl } from '@/utils/request';
+// import { abortFetch, newAbortCtrl } from '@/utils/request';
 import { getRandomKey, getStorage, isObjectValEqual, removeStorage, setStorage } from 'jh-utils';
-import { appConfig } from '@/globalConfig';
-import { connect } from 'dva';
-import keyCodes from '@/keyCodes';
+// import { appConfig } from '@/globalConfig';
+// import { connect } from 'dva';
+import keyCodes from '../../keyCodes';
 import ChooseComp from '../ChooseComp';
 import styles from './index.less';
 import ButtonComp from '../ButtonComp';
-import { isAuthMenuByConfig } from '@/components/SiderMenu/SiderMenuUtils';
-import { formatMsgByCn, myFormatMessage } from '@/utils/localeUtils';
-import GlobalProvider from "../GlobalProvider";
+// import { isAuthMenuByConfig } from '@/components/SiderMenu/SiderMenuUtils';
+// import { formatMsgByCn, myFormatMessage } from '@/utils/localeUtils';
+import {ConfigConsumer} from 'antd/es/config-provider'
 import {JhConsumerProps} from "../Config";
+import {any} from "prop-types";
 
 const { Option } = Select;
 const InputGroup = Input.Group;
 
-export interface OBoxProps {
-  displayName: 'ObjectBox',
-  appCode: '', // （必要）String 对象数据的 appCode
-  dispatch: null, // Function 触发出发 Action
-  compData: [], // Array 列表数据
-  nativeProps: {
-    // placeholder:'请选择'
-  }, // Object Select 组件的属性
-  primaryKey: 'id',
-  nameKey: 'name',
-  renderItem: null, // Function 自定义 Option 中的文本显示
-  renderOptionText: null, // Function 自定义 Option 中的 text 属性值
-  visible: true,
-  style: {},
-  onDataLoad: null, // Function 数据加载之后的回调
-  quickAdd: true, // Boolean
-  fetchInMount: true, // Boolean componentDidMount 的时候发请求
-  forceReqInMount: false,
-  fetchParams: {}, // Object 发请求的额外参数
-  needMenu: false,
-  disabled: false,
+export interface OBoxProps extends JhConsumerProps {
+  /**
+   *displayName 默认参数'ObjectBox'
+   * */
+  displayName?: string;
+  /**
+   *appCode （必要）String 对象数据的 appCode
+   * */
+  appCode?: string; // （必要）String 对象数据的 appCode
+  /**
+   *compData  Array 列表数据
+   * */
+  compData?: Array<any>; // Array 列表数据
+  /**
+   *nativeProps placeholder:'请选择' Object Select 组件的属性
+   * */
+  nativeProps?: any;// placeholder:'请选择' Object Select 组件的属性
+  /**
+   *primaryKey  string 默认参数 'id'
+   * */
+  primaryKey?: any;//'name'
+  /**
+   *nameKey string 默认参数 'id'
+   * */
+  nameKey?: any;//'name'
+  /**
+   *renderItem  Function 自定义 Option 中的文本显示
+   * */
+  renderItem?: Function; // Function 自定义 Option 中的文本显示
+  /**
+   *renderOptionText  Function 自定义 Option 中的 text 属性值
+   * */
+  renderOptionText?: Function; // Function 自定义 Option 中的 text 属性值
+  /**
+   *visible 是否可见 默认 true
+   * */
+  visible?: boolean;
+  /**
+   *style 样式 {}
+   * */
+  style?: any;
+  /**
+   *onDataLoad Function 数据加载之后的回调
+   * */
+  onDataLoad?: any; // Function 数据加载之后的回调
+  /**
+   *quickAdd 快速添加 默认 true
+   * */
+  quickAdd?: boolean; // Boolean
+  /**
+   *fetchInMount 生命周期 componentDidMount 的时候发请求 默认 true
+   * */
+  fetchInMount?: boolean; // Boolean componentDidMount 的时候发请求
+  /**
+   *forceReqInMount 默认 false
+   * */
+  forceReqInMount?: boolean;
+  /**
+   *fetchParams Object 发请求的额外参数
+   * */
+  fetchParams?: object; // Object 发请求的额外参数
+  /**
+   *needMenu 默认值 false
+   * */
+  needMenu?: boolean;
+  /**
+   *disabled 默认值 false
+   * */
+  disabled?: boolean;
+  /**
+   *initialPageNo 页码 默认 1
+   * */
+  initialPageNo?:number;
+  /**
+   *onRef 实例化
+   * */
+  onRef?:any;
+  /**
+   *onChange 回调函数
+   * */
+  onChange?: any;
+  /**
+   *asyncReqFunc 异步请求
+   * */
+  asyncReqFunc?: any;
+  /**
+   *loading 加载中效果
+   * */
+  loading?: boolean;
+  /**
+   *dropdownFooter 自定义底部
+   * */
+  dropdownFooter?: any;
+  /**
+   *detailUrl 详情的URL
+   * */
+  detailUrl?: string;
+  /**
+   *listUrl 主数据列表的URL
+   * */
+  listUrl?: any;
 }
 export interface stateProps {
-  loading: boolean;
+  loading?: boolean;
+  list?:Array<any>;
+  randomKey?:any;
+  isShowModal?:boolean;
+  nameKey?: any;
+  primaryKey?: any;
 }
 export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
+
+  configObj?: any = {};
+  finderConfig?: any = null;
+  authConfig?: any = {};
+  ddRef?: any = null;
+  ddProps?: any = {};
+  loopTimers?: any = [];
+  pageNo?: any = 1;
+  abortCtrl?: any= null;
 
   static defaultProps = {
     displayName: 'ObjectBox',
     appCode: '', // （必要）String 对象数据的 appCode
-    dispatch: null, // Function 触发出发 Action
-    compData: [], // Array 列表数据
-    nativeProps: {
-      // placeholder:'请选择'
-    }, // Object Select 组件的属性
+    // dispatch: null, // Function 触发出发 Action
+    // compData: [], // Array 列表数据
+    // nativeProps: {}, // Object Select 组件的属性
     primaryKey: 'id',
     nameKey: 'name',
-    renderItem: null, // Function 自定义 Option 中的文本显示
-    renderOptionText: null, // Function 自定义 Option 中的 text 属性值
+    // renderItem: null, // Function 自定义 Option 中的文本显示
+    // renderOptionText: null, // Function 自定义 Option 中的 text 属性值
     visible: true,
     style: {},
-    onDataLoad: null, // Function 数据加载之后的回调
+    // onDataLoad: any, // Function 数据加载之后的回调
     quickAdd: true, // Boolean
     fetchInMount: true, // Boolean componentDidMount 的时候发请求
     forceReqInMount: false,
-    fetchParams: {}, // Object 发请求的额外参数
+    // fetchParams: {}, // Object 发请求的额外参数
     needMenu: false,
     disabled: false,
   };
@@ -72,42 +165,43 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
     if ('value' in nextProps) {
       const { primaryKey, nameKey } = nextProps;
       const value = nextProps.value || {};
-      const v = {};
-      v[primaryKey] = value[primaryKey] || '';
-      v[nameKey] = value[nameKey] || '';
-      return v;
+      return {
+        primaryKey: value[primaryKey] || '',
+        nameKey : value[nameKey] || '',
+      };
     }
     return null;
   }
 
-  defaultFinderConfig = {
-    actionType: 'global/findByFinderCode',
-    showValueFields: 'name',
-    optionTextFields: 'code;name',
-    detailUrl: '',
-    listUrl: '',
-  };
+  // defaultFinderConfig = {
+  //   actionType: 'global/findByFinderCode',
+  //   showValueFields: 'name',
+  //   optionTextFields: 'code;name',
+  //   detailUrl: '',
+  //   listUrl: '',
+  // };
 
   constructor(props: any) {
     super(props);
     const { primaryKey, nameKey } = props;
     const value = props.value || {};
-    const v = {};
-    v[primaryKey] = value[primaryKey] || '';
-    v[nameKey] = value[nameKey] || '';
     this.state = {
       loading: false,
-      ...v,
+      list:[],
+      randomKey:getRandomKey(),
+      nameKey:value[nameKey] || '',
+      primaryKey:value[primaryKey] || '',
     };
 
     // 获取 @/appConfig 中的配置
-    const { appCode } = props;
-    this.configObj = find(appConfig, (v) => {
-      return appCode === v.finderCode;
-    }) || {};
+    const { appCode,config } = props;
+    // this.configObj = config&&find(config.appConfig, (v) => {
+    //   return appCode === v.finderCode;
+    // }) || {};
+    this.configObj = config || {};
     this.finderConfig = !isEmpty(this.configObj.finderConfig) ?
       this.configObj.finderConfig
-      : this.defaultFinderConfig;
+      : {};
     this.authConfig = !isEmpty(this.configObj.authConfig) ?
       this.configObj.authConfig
       : {};
@@ -121,13 +215,14 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
   }
 
   componentDidMount() {
-    const { compData, global, appCode, onDataLoad, fetchInMount, forceReqInMount } = this.props;
+    const { compData, onDataLoad, fetchInMount, forceReqInMount } = this.props;
     if (fetchInMount) {
       let storageKey = `CHANGED_${this.configObj.modelName}`;
       let dataChangedObj = getStorage(storageKey);
       // 如果数据在新窗口发生变化，则更新数据
-      if (dataChangedObj && isEmpty(dataChangedObj[window.CODE])) {
-        dataChangedObj[window.CODE] = '1';
+      let CODE = getRandomKey();
+      if (dataChangedObj && isEmpty(dataChangedObj[CODE])) {
+        dataChangedObj[CODE] = '1';
         setStorage(storageKey, dataChangedObj);
         // removeStorage(storageKey);
         // alert('dataChanged');
@@ -136,7 +231,8 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
         this.fetchData(true);
 
       } else {
-        const data = global[appCode];
+        // const data = global[appCode];
+        const data = this.state.list;
 
         if ((isEmpty(compData) && isEmpty(data)) || forceReqInMount) {
           this.fetchData(forceReqInMount);
@@ -149,7 +245,7 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
     this.props.onRef && this.props.onRef(this);
 
     if (this.ddRef.current && this.ddRef.current.offsetWidth < 150) {
-      const ddProps = {};
+      const ddProps:any = {};
       // console.log('>>> this.ddRef.current.offsetWidth', this.ddRef.current.offsetWidth);
       // this.ddRef.current.offsetWidth
       ddProps.dropdownMatchSelectWidth = false;
@@ -160,7 +256,7 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
 
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: any, nextState: any) {
     if (nextProps.initialPageNo !== this.props.initialPageNo) {
       this.pageNo = nextProps.initialPageNo;
     }
@@ -168,26 +264,13 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
     return (!isObjectValEqual(nextProps, this.props) || !isObjectValEqual(nextState, this.state));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // console.log('cdup')
-    // console.log('>>> object', this.configObj.modelName, this.props.global.dataChangingModels);
-    // // 如果此模块的数据在外部有更新，则刷新数据
-    // if (this.props.global.dataChangingModels[this.configObj.modelName]) {
-    //   this.props.dispatch({
-    //     type: 'global/deleteDataChangingModals',
-    //     payload: {
-    //       modelName: this.configObj.modelName,
-    //     },
-    //   });
-    //   this.pageNo = 1;
-    //   this.fetchData(true);
-    // }
-
+  componentDidUpdate(prevProps: any, prevState: any) {
     let storageKey = `CHANGED_${this.configObj.modelName}`;
     let dataChangedObj = getStorage(storageKey);
     // 如果数据在新窗口发生变化，则更新数据
-    if (dataChangedObj && isEmpty(dataChangedObj[window.CODE])) {
-      dataChangedObj[window.CODE] = '1';
+    let CODE = getRandomKey();
+    if (dataChangedObj && isEmpty(dataChangedObj[CODE])) {
+      dataChangedObj[CODE] = '1';
       setStorage(storageKey, dataChangedObj);
       // removeStorage(`CHANGED_${this.configObj.modelName}`);
       // alert('dataChanged');
@@ -198,26 +281,27 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
   }
 
   componentWillUnmount() {
-    abortFetch(this.abortCtrl);
+    let {request} = this.props;
+    request && request.abortFetch(this.abortCtrl);
     // 清空计时器
-    this.loopTimers.map((timer) => {
+    this.loopTimers.map((timer: any) => {
       clearInterval(timer);
     });
   }
 
   fetchData(forceReq = false) {
-    const { dispatch, appCode, onDataLoad, asyncReqFunc } = this.props;
+    const { appCode, onDataLoad, asyncReqFunc } = this.props;
 
     if (asyncReqFunc) {
       asyncReqFunc(forceReq, this.pageNo);
     } else {
-      const { fetchParams } = this.props;
+      const { fetchParams,service,request } = this.props;
       const $this = this;
-      if (dispatch && appCode && !(this.state.loading || this.props.loading === true)) {
-        const actionType = this.finderConfig.actionType || this.defaultFinderConfig.actionType;
+      if ( request && service && appCode && !isEmpty(this.finderConfig) && !(this.state.loading || this.props.loading === true)) {
+        // const actionType = this.finderConfig.actionType || this.defaultFinderConfig.actionType;
         this.setState({ loading: true }, () => {
-          $this.abortCtrl = newAbortCtrl();
-          const payload = {
+          $this.abortCtrl = request.newAbortCtrl();
+          const payload: any = {
             finderCode: appCode,
             signal: $this.abortCtrl.signal,
             ...fetchParams,
@@ -227,14 +311,14 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
             payload.reqApi = this.finderConfig.reqApi;
           }
 
-          dispatch({
-            type: actionType,
+          service&&service.listReq({
+            // type: actionType,
             payload,
-          }).then((rsp) => {
+          }).then((rsp: any) => {
             if (isFunction(onDataLoad)) {
               onDataLoad(rsp && 200 === rsp.status && isArray(rsp.data) ? rsp.data : []);
             }
-            $this.setState({ loading: false });
+            $this.setState({ loading: false, list: rsp.data });
           });
         });
       }
@@ -246,16 +330,16 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
    * @returns {*|string|null}
    */
   isCanFetch() {
-    return ((this.props.dispatch && this.props.appCode) || this.props.asyncReqFunc);
+    return ((this.props.service && this.props.appCode) || this.props.asyncReqFunc);
   }
 
   /**
    * 点击下拉框时，如果值为空，则刷新数据
    */
   handleClickSelect() {
-    const { compData, global, appCode } = this.props;
-    const data = global[appCode];
-
+    const { compData,} = this.props;
+    // const data = global[appCode];
+    const data = this.state.list;
     if (isEmpty(compData) && isEmpty(data)) {
       this.fetchData(true);
     }
@@ -287,11 +371,12 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
 
   handleChange(value: any) {
     // console.log('value', value);
-    const { primaryKey, nameKey, global, appCode } = this.props;
-    const compData = !isEmpty(this.props.compData) ? this.props.compData : global[appCode] || [];
-    const data = find(compData, (v) => (v[primaryKey] == value));
+    const { primaryKey, nameKey, appCode } = this.props;
+    // const compData = !isEmpty(this.props.compData) ? this.props.compData : global[appCode] || [];
+    const compData = !isEmpty(this.props.compData) ? this.props.compData : this.state.list || [];
+    const data = find(compData, (v:any) => (v[primaryKey] == value));
     if (isEmpty(data)) {
-      const emptyObj = {};
+      const emptyObj: any = {};
       emptyObj[primaryKey] = '';
       emptyObj[nameKey] = '';
       if (!('value' in this.props)) {
@@ -305,12 +390,15 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
     };
 
     if (!('value' in this.props)) {
-      this.setState(nextState);
+
+      this.setState({
+        nameKey:''
+      });
     }
     this.triggerChange(nextState);
   }
 
-  triggerChange = (changedValue) => {
+  triggerChange = (changedValue: any) => {
     // Should provide an event to pass value to Form.
     const onChange = this.props.onChange;
     if (onChange) {
@@ -329,8 +417,12 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
 
   _openNewWindow(url: string, autoClose = true) {
     const $this = this;
-    const newWin = window.openWin(url, '_blank') || {};
-
+    let {localeUtils} = $this.props;
+    const newWin: any = window.open(url, '_blank') || {};
+    if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+      // '本站弹出窗口被屏蔽，如需查看请修改浏览器相关配置!'
+      message.error(localeUtils && localeUtils.myFormatMessage('tip.window.open'));
+    }
     newWin.IS_OPEN = true; // 标识该窗口是新打开的
     if (autoClose) {
       newWin.AUTO_CLOSE = true; // 用于新窗口关闭自己的逻辑
@@ -345,8 +437,9 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
       let storageKey = `CHANGED_${this.configObj.modelName}`;
       let dataChangedObj = getStorage(storageKey);
       // 如果数据在新窗口发生变化，则更新数据
-      if (dataChangedObj && isEmpty(dataChangedObj[window.CODE])) {
-        dataChangedObj[window.CODE] = '1';
+      let CODE = getRandomKey();
+      if (dataChangedObj && isEmpty(dataChangedObj[CODE])) {
+        dataChangedObj[CODE] = '1';
         setStorage(storageKey, dataChangedObj);
         // removeStorage(storageKey);
         // alert('dataChanged');
@@ -360,12 +453,12 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
   }
 
   dropdownRender(menu: any) {
-    const { dropdownFooter, loading, global } = this.props;
+    const { dropdownFooter, loading, localeUtils } = this.props;
     const needReflesh = this.isCanFetch();
-    let configObj = {};
+    let configObj: any = {};
     let detailUrl = ''; // 添加页面的路由， 用于点击 [+ 添加] 时打开新窗口
     let listUrl = ''; // 列表页面的路由， 用于点击 [查看所有] 时打开新窗口
-    let hadListAuth = false; // 当前用户是否有 [查看所有] 权限
+    // let hadListAuth = false; // 当前用户是否有 [查看所有] 权限
 
     if (this.props.quickAdd) { // 需要快速添加
       configObj = this.configObj;
@@ -385,16 +478,17 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
         listUrl = `./#${configObj.modelName}`;
       }
 
-      const userInfo = global.userInfo || {};
-      hadListAuth = isAuthMenuByConfig(this.authConfig, userInfo.resources || {});
+      // const userInfo = global.userInfo || {};
+      // hadListAuth = isAuthMenuByConfig(this.authConfig, userInfo.resources || {});
 
-      if (!hadListAuth) {
-        listUrl = '';
-      }
+      // if (!hadListAuth) {
+      //   listUrl = '';
+      // }
 
     }
-    let addTxt = formatMsgByCn('添加');
-    let appTxt = formatMsgByCn(configObj.cn);
+    let addTxt = localeUtils?localeUtils.formatMsgByCn('添加'):'添加';
+    let cn = !isEmpty(configObj)?configObj.cn:'';
+    let appTxt =localeUtils?localeUtils.formatMsgByCn(cn):cn;
 
     const ddFooter = dropdownFooter ? dropdownFooter : (
       isEmpty(detailUrl) && !needReflesh ? null :
@@ -403,9 +497,9 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
           <div style={{ position: 'relative', padding: 6, height: '36px' }}>
             {
               !isEmpty(detailUrl) && (
-                <ButtonComp btnType={'a'}
-                            appConfigObj={configObj}
-                            actionType={'save'}
+                <ButtonComp type = 'link'
+                            // appConfigObj={configObj}
+                            // actionType={'save'}
                             onMouseDown={e => {
                               e.preventDefault();
                               this._openNewWindow(detailUrl);
@@ -420,7 +514,7 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
             {
               needReflesh && (
                 <Button size={'small'}
-                        title={`${myFormatMessage('crud.refresh')} (F5)`}
+                        title={`${localeUtils && localeUtils.myFormatMessage('crud.refresh')} (F5)`}
                         style={{ float: 'right', marginRight: !isEmpty(listUrl) ? 22 : 0 }}
                         onMouseDown={e => {
                           e.preventDefault();
@@ -435,7 +529,7 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
               !isEmpty(listUrl) && (
                 <Button size={'small'}
                   // style={{ float: 'right' }}
-                        title={myFormatMessage('comp.blank.view-all', { name: appTxt })}
+                        title={localeUtils && localeUtils.myFormatMessage('comp.blank.view-all', { name: appTxt })}
                         className={styles.ddJumpBtn}
                         onMouseDown={e => {
                           e.preventDefault();
@@ -474,7 +568,7 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
     const { primaryKey, nameKey, renderItem, renderOptionText } = this.props;
     let finderConfig = this.finderConfig;
     let text = '',
-      optionText = '',
+      optionText: any = '',
       title = '';
 
     // 值显示的字段
@@ -532,24 +626,24 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
     };
   }
 
-  handleOk(checkedList) {
+  handleOk(checkedList: any) {
     const checkedItem = checkedList[0] || {};
     this.setState({ isShowModal: false }, () => {
       this.handleChange(checkedItem[this.props.primaryKey] || '');
     });
   }
 
-  renderMain(opt = {}) {
-    const { primaryKey, nameKey, nativeProps = {}, global, appCode, disabled } = this.props;
-    const compData = !isEmpty(this.props.compData) ? this.props.compData : global[appCode] || [];
+  renderMain(opt: any = {}) {
+    const { primaryKey, nameKey, nativeProps = {}, disabled,localeUtils } = this.props;
+    const compData = !isEmpty(this.props.compData) ? this.props.compData : this.state.list || [];
     const ddProps = this.ddProps;
-    let placeHolder = myFormatMessage('comp.select.placeholder');
+    let placeHolder = localeUtils ? localeUtils.myFormatMessage('comp.select.placeholder'):'请选择';
     return (
       <>
         <Select showSearch
                 allowClear
                 showArrow={!this.props.needMenu}
-                value={isEmpty(compData) ? this.state[nameKey] : this.state[primaryKey]}
+                value={isEmpty(compData) ? this.state.nameKey :this.state.primaryKey}
                 filterOption={this.handleFilter.bind(this)}
                 onDropdownVisibleChange={this.handleClickSelect.bind(this)}
                 onChange={this.handleChange.bind(this)}
@@ -562,7 +656,7 @@ export class ObjectBoxProps extends Component<OBoxProps, stateProps> {
                 disabled={disabled}
                 {...ddProps}
         >
-          <Option value="" text={placeHolder}>{placeHolder}</Option>
+          <Option value="">{placeHolder}</Option>
           {map(compData, (opt, oK) => {
             const props = this.getOptionProps(opt, oK);
             return (
@@ -638,9 +732,9 @@ export default class ObjectBox extends Component {
   };
   render(){
     return (
-        <GlobalProvider>
+        <ConfigConsumer>
           {this.OBox}
-        </GlobalProvider>
+        </ConfigConsumer>
     )
   }
 }
